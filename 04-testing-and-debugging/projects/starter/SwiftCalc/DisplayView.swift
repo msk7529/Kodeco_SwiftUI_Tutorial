@@ -28,12 +28,24 @@
 
 import SwiftUI
 
+extension Color {
+    // Return a random color
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
+    }
+}
+
 struct DisplayView: View {
     
     @Binding var display: String
     
     var body: some View {
         HStack {
+            let _ = Self._printChanges()    // 무엇때문에 뷰가 다시 그려졌는지 print. 디버깅시에 용이함
             if display.isEmpty {
                 Text("0")
                     .accessibilityIdentifier("display")
@@ -63,6 +75,7 @@ struct DisplayView: View {
                     )
             }
         }
+        .background(Color.random)
     }
 }
 
