@@ -46,13 +46,9 @@ struct ContentView: View {
             Color(rgbStruct: guess)
             Text(guess.intString())
                 .padding()
-            HStack {
-                Text("0")
-                Slider(value: $guess.red)   // read-write binding. 슬라이더의 값이 변경되면 guess.red 값도 변경된다.
-                    .accentColor(.red)  // slider의 minimumTrackTintColor 컬러를 정의
-                Text("255")
-            }
-            .padding(.horizontal)
+            ColorSlider(value: $guess.red, trackColor: .red)
+            ColorSlider(value: $guess.green, trackColor: .green)
+            ColorSlider(value: $guess.blue, trackColor: .blue)
             Button("Hit Me!") {
                 
             }
@@ -60,8 +56,24 @@ struct ContentView: View {
     }
 }
 
+struct ColorSlider: View {
+    
+    @Binding var value: Double  // 부모뷰로부터 초기값을 받아와 조작. 부모뷰에 전달된 값을 넘기기 위해 Binding으로 선언
+    var trackColor: Color
+    
+    var body: some View {
+        HStack {
+            Text("0")
+            Slider(value: $value)   // read-write binding
+                .accentColor(trackColor)  // slider의 minimumTrackTintColor 컬러를 정의
+            Text("255")
+        }
+        .padding(.horizontal)
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(guess: RGB(red: 0.8, green: 0.3, blue: 0.7))
+        ContentView(guess: RGB())
     }
 }
