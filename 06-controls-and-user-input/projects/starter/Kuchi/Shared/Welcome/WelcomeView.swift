@@ -33,45 +33,70 @@
 import SwiftUI
 
 struct WelcomeView: View {
-  var body: some View {
-    ZStack {
-      Image("welcome-background", bundle: nil)
-        .resizable()
-        .aspectRatio(1 / 1, contentMode: .fill)
-        .edgesIgnoringSafeArea(.all)
-        .saturation(0.5)
-        .blur(radius: 5)
-        .opacity(0.08)
-      
-      Label {
-        VStack(alignment: .leading) {
-          Text("Welcome to")
-            .font(.headline)
-            .bold()
-          Text("Kuchi")
-            .font(.largeTitle)
-            .bold()
+    var body: some View {
+        ZStack {
+            Image("welcome-background", bundle: nil)
+                .resizable()
+                .scaledToFit() // 원본 비율을 유지해서 부모에서 이미지가 완전히 보이도록 함. 바로 아래에서 fill로 채우기 때문에 주석해도 무관함.
+                .aspectRatio(1 / 1, contentMode: .fill) // 1 / 1: 기본 설정, fill: 상위 뷰 전체를 채움
+                .edgesIgnoringSafeArea(.all)
+                .saturation(0.5)    // 채도를 낮춘다.
+                .blur(radius: 5)
+                .opacity(0.08)
+            
+            /*
+            HStack {
+                Image(systemName: "table")
+                    .resizable()    // 이걸 써야 이미지의 크기가 변경됨
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(30 / 2)   // 주석해도 아래에서 clipShape(Circle())이 적용되면서 동일한 결과
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 1))     // 회색 테두리 추가
+                    .background(Color(white: 0.9))
+                    .clipShape(Circle())    // masksToBounds와 비슷
+                    .foregroundColor(.red)
+                
+                VStack(alignment: .leading) {
+                    Text("Welcome to")
+                        .font(.headline)
+                        .bold()
+                    Text("Kuchi")
+                        .font(.largeTitle)
+                        .bold()
+                }
+                .foregroundColor(.red)
+                .lineLimit(1)
+                .padding(.horizontal)
+            }*/
+            
+            Label {
+                VStack(alignment: .leading) {
+                    Text("Welcome to")
+                        .font(.headline)
+                        .bold()
+                    Text("Kuchi")
+                        .font(.largeTitle)
+                        .bold()
+                }
+                .foregroundColor(.red)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal)
+            } icon: {
+                Image(systemName: "table")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 1))
+                    .background(Color(white: 0.9))
+                    .clipShape(Circle())
+                    .foregroundColor(.red)
+            }
+            .labelStyle(HorizontallyAlignedLabelStyle())    // icon과 Text를 중앙정렬하기 위함
         }
-        .foregroundColor(.red)
-        .lineLimit(2)
-        .multilineTextAlignment(.leading)
-        .padding(.horizontal)
-      } icon: {
-        Image(systemName: "table")
-          .resizable()
-          .frame(width: 30, height: 30)
-          .overlay(Circle().stroke(Color.gray, lineWidth: 1))
-          .background(Color(white: 0.9))
-          .clipShape(Circle())
-          .foregroundColor(.red)
-      }
-      .labelStyle(HorizontallyAlignedLabelStyle())
     }
-  }
 }
 
 struct WelcomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeView()
-  }
+    static var previews: some View {
+        WelcomeView()
+    }
 }

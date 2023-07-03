@@ -35,6 +35,7 @@ import SwiftUI
 import Foundation
 
 final class UserManager: ObservableObject {
+    
     @Published
     var profile: Profile = Profile()
     
