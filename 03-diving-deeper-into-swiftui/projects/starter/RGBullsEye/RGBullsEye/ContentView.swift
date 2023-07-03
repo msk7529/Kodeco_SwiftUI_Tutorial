@@ -52,20 +52,20 @@ struct ContentView: View {
                     .ignoresSafeArea()  // 화면 전체에 컬러 적용
 
                 VStack {
-                    ColorCircle(rgb: game.target, size: 200)
-                    
+                    ColorCircle(rgb: game.target, size: proxy.size.height * circleSize)
+
                     if !showScore {
                         /* Text("R: ??? G: ??? B: ???")
                             .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐 */
-                        BevelText(text: "R: ??? G: ??? B: ???", width: 200, height: 48)
+                        BevelText(text: "R: ??? G: ??? B: ???", width: proxy.size.width * labelWidth, height: proxy.size.height * labelHeight)
                     } else {
-                        BevelText(text: game.target.intString(), width: 200, height: 48)
+                        BevelText(text: game.target.intString(), width: proxy.size.width * labelWidth, height: proxy.size.height * labelHeight)
                     }
                     
-                    ColorCircle(rgb: guess, size: 200)
-                    
-                    BevelText(text: guess.intString(), width: 200, height: 48)
-                    
+                    ColorCircle(rgb: guess, size: proxy.size.height * circleSize)
+
+                    BevelText(text: guess.intString(), width: proxy.size.width * labelWidth, height: proxy.size.height * labelHeight)
+
                     ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
                     ColorSlider(value: $guess.green, trackColor: .green)
                     ColorSlider(value: $guess.blue, trackColor: .blue)
@@ -74,7 +74,7 @@ struct ContentView: View {
                         showScore = true
                         game.check(guess: guess)
                     }
-                    .buttonStyle(NeuButtonStyle(width: 327, height: 48))
+                    .buttonStyle(NeuButtonStyle(width: proxy.size.width * buttonWidth, height: proxy.size.height * labelHeight))
                     .alert(isPresented: $showScore) {
                         Alert(
                             title: Text("Your Score"),
@@ -94,8 +94,13 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ContentView(guess: RGB())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+        Group {
+            ContentView(guess: RGB())   // 현재 실행중인 시뮬레이터의 디바이스로 설정됨
+            ContentView(guess: RGB())
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+            ContentView(guess: RGB())
+                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+        }
     }
 }
 
