@@ -33,13 +33,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // @State: 프로퍼티 값이 변경되면 body를 다시 계산한다.
+    @State var game = Game()
+    @State var guess: RGB
+    
     var body: some View {
         VStack {
-            Color(red: 0.5, green: 0.5, blue: 0.5)
+            Color(rgbStruct: game.target)
             Text("R: ??? G: ??? B: ???")
                 .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
-            Color(red: 0.5, green: 0.5, blue: 0.5)
+            Color(rgbStruct: guess)
             Text("R: 204 G: 76 B: 178")
+                .padding()
             Slider(value: .constant(0.5))
             Button("Hit Me!") {
                 
@@ -50,6 +56,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(guess: RGB(red: 0.8, green: 0.3, blue: 0.7))
     }
 }
