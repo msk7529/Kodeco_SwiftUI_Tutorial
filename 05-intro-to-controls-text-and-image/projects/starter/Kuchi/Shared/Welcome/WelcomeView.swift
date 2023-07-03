@@ -34,22 +34,33 @@ import SwiftUI
 
 struct WelcomeView: View {
     var body: some View {
-        HStack {
-            Image(systemName: "table")
-                .resizable()    // 이걸 써야 이미지의 크기가 변경됨
-                .frame(width: 30, height: 30)
-                .cornerRadius(30 / 2)   // 주석해도 아래에서 clipShape(Circle())이 적용되면서 동일한 결과
-                .overlay(Circle().stroke(Color.gray, lineWidth: 1))     // 회색 테두리 추가
-                .background(Color(white: 0.9))
-                .clipShape(Circle())    // masksToBounds와 비슷
-                .foregroundColor(.red)
+        ZStack {
+            Image("welcome-background", bundle: nil)
+                .resizable()
+                .scaledToFit() // 원본 비율을 유지해서 부모에서 이미지가 완전히 보이도록 함. 바로 아래에서 fill로 채우기 때문에 주석해도 무관함.
+                .aspectRatio(1 / 1, contentMode: .fill) // 1 / 1: 기본 설정, fill: 상위 뷰 전체를 채움
+                .edgesIgnoringSafeArea(.all)
+                .saturation(0.5)    // 채도를 낮춘다.
+                .blur(radius: 5)
+                .opacity(0.08)
             
-            Text("Welcome to Kuchi")
-                .font(.system(size: 30))
-                .bold()
-                .foregroundColor(.red)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
+            HStack {
+                Image(systemName: "table")
+                    .resizable()    // 이걸 써야 이미지의 크기가 변경됨
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(30 / 2)   // 주석해도 아래에서 clipShape(Circle())이 적용되면서 동일한 결과
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 1))     // 회색 테두리 추가
+                    .background(Color(white: 0.9))
+                    .clipShape(Circle())    // masksToBounds와 비슷
+                    .foregroundColor(.red)
+                
+                Text("Welcome to Kuchi")
+                    .font(.system(size: 30))
+                    .bold()
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
         }
     }
 }
