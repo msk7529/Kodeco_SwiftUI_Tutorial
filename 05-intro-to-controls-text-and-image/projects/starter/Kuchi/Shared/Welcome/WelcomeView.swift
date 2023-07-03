@@ -34,6 +34,15 @@ import SwiftUI
 
 struct WelcomeView: View {
     var body: some View {
+        Image(systemName: "table")
+            .resizable()    // 이걸 써야 이미지의 크기가 변경됨
+            .frame(width: 30, height: 30)
+            .cornerRadius(30 / 2)   // 주석해도 아래에서 clipShape(Circle())이 적용되면서 동일한 결과
+            .overlay(Circle().stroke(Color.gray, lineWidth: 1))     // 회색 테두리 추가
+            .background(Color(white: 0.9))
+            .clipShape(Circle())    // masksToBounds와 비슷
+            .foregroundColor(.red)
+        
         Text("Welcome to Kuchi")
             .font(.system(size: 60))
             .bold()
