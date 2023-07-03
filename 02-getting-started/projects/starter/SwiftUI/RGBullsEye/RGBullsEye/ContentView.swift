@@ -37,6 +37,7 @@ struct ContentView: View {
     // @State: 프로퍼티 값이 변경되면 body를 다시 계산한다.
     @State var game = Game()
     @State var guess: RGB
+    @State private var showScore = false
     
     var body: some View {
         VStack {
@@ -50,7 +51,14 @@ struct ContentView: View {
             ColorSlider(value: $guess.green, trackColor: .green)
             ColorSlider(value: $guess.blue, trackColor: .blue)
             Button("Hit Me!") {
-                
+                showScore = true
+                game.check(guess: guess)
+            }
+            .alert(isPresented: $showScore) {
+                Alert(title: Text("Your Score"), message: Text(String(game.scoreRound)), dismissButton: .default(Text("OK"), action: {
+                    game.startNewRound()
+                    guess = RGB()
+                }))
             }
         }
     }
