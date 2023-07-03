@@ -54,12 +54,20 @@ struct WelcomeView: View {
                     .clipShape(Circle())    // masksToBounds와 비슷
                     .foregroundColor(.red)
                 
-                Text("Welcome to Kuchi")
-                    .font(.system(size: 30))
-                    .bold()
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                VStack {
+                    Text("Welcome to")
+                        .font(.system(size: 30))
+                        .bold()
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                    Text("Kuchi")
+                        .font(.system(size: 30))
+                        .bold()
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                }
             }
         }
     }
