@@ -40,6 +40,10 @@ struct ContentView: View {
                 .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
             Color(red: 0.5, green: 0.5, blue: 0.5)
             Text("R: 204 G: 76 B: 178")
+            Slider(value: .constant(0.5))
+            Button("Hit Me!") {
+                
+            }
         }
     }
 }
