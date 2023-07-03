@@ -44,6 +44,7 @@ struct WelcomeView: View {
                 .blur(radius: 5)
                 .opacity(0.08)
             
+            /*
             HStack {
                 Image(systemName: "table")
                     .resizable()    // 이걸 써야 이미지의 크기가 변경됨
@@ -65,7 +66,31 @@ struct WelcomeView: View {
                 .foregroundColor(.red)
                 .lineLimit(1)
                 .padding(.horizontal)
+            }*/
+            
+            Label {
+                VStack(alignment: .leading) {
+                    Text("Welcome to")
+                        .font(.headline)
+                        .bold()
+                    Text("Kuchi")
+                        .font(.largeTitle)
+                        .bold()
+                }
+                .foregroundColor(.red)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal)
+            } icon: {
+                Image(systemName: "table")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 1))
+                    .background(Color(white: 0.9))
+                    .clipShape(Circle())
+                    .foregroundColor(.red)
             }
+            .labelStyle(HorizontallyAlignedLabelStyle())    // icon과 Text를 중앙정렬하기 위함
         }
     }
 }
