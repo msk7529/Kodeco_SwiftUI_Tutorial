@@ -78,6 +78,7 @@ struct ContentView: View {
                         })
                 }
             }
+            .font(.headline)    // VStack 내의 텍스트에 headline 폰트스타일 적용
         }
     }
 }
@@ -102,5 +103,6 @@ struct ColorSlider: View {
             Text("255")
         }
         .padding(.horizontal)
+        .font(.subheadline)
     }
 }
