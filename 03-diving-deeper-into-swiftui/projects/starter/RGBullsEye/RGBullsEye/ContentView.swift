@@ -48,17 +48,16 @@ struct ContentView: View {
                 ColorCircle(rgb: game.target, size: 200)
                 
                 if !showScore {
-                    Text("R: ??? G: ??? B: ???")
-                        .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+                    /* Text("R: ??? G: ??? B: ???")
+                        .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐 */
+                    BevelText(text: "R: ??? G: ??? B: ???", width: 200, height: 48)
                 } else {
-                    Text(game.target.intString())
-                        .padding()
+                    BevelText(text: game.target.intString(), width: 200, height: 48)
                 }
                 
                 ColorCircle(rgb: guess, size: 200)
                 
-                Text(guess.intString())
-                    .padding()
+                BevelText(text: guess.intString(), width: 200, height: 48)
                 
                 ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
                 ColorSlider(value: $guess.green, trackColor: .green)
