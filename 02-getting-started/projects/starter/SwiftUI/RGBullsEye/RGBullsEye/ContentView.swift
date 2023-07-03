@@ -42,14 +42,24 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Color(rgbStruct: game.target)
-            Text("R: ??? G: ??? B: ???")
-                .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+            
+            if !showScore {
+                Text("R: ??? G: ??? B: ???")
+                    .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+            } else {
+                Text(game.target.intString())
+                    .padding()
+            }
+
             Color(rgbStruct: guess)
+            
             Text(guess.intString())
                 .padding()
+            
             ColorSlider(value: $guess.red, trackColor: .red)
             ColorSlider(value: $guess.green, trackColor: .green)
             ColorSlider(value: $guess.blue, trackColor: .blue)
+            
             Button("Hit Me!") {
                 showScore = true
                 game.check(guess: guess)
