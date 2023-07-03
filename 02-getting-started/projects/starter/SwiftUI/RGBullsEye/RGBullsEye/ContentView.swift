@@ -44,9 +44,15 @@ struct ContentView: View {
             Text("R: ??? G: ??? B: ???")
                 .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
             Color(rgbStruct: guess)
-            Text("R: 204 G: 76 B: 178")
+            Text(guess.intString())
                 .padding()
-            Slider(value: .constant(0.5))
+            HStack {
+                Text("0")
+                Slider(value: $guess.red)   // read-write binding. 슬라이더의 값이 변경되면 guess.red 값도 변경된다.
+                    .accentColor(.red)  // slider의 minimumTrackTintColor 컬러를 정의
+                Text("255")
+            }
+            .padding(.horizontal)
             Button("Hit Me!") {
                 
             }
