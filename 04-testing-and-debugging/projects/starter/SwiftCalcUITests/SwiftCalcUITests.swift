@@ -81,6 +81,27 @@ final class SwiftCalcUITests: XCTestCase {
         let displayText = display.label
         XCTAssert(displayText == "8.0")
     }
+    
+    func testSwipeToClearMemory() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let threeButton = app.buttons["3"]
+        threeButton.tap()
+        let fiveButton = app.buttons["5"]
+        fiveButton.tap()
+        
+        let memoryButton = app.buttons["M+"]
+        memoryButton.tap()
+        
+        let memoryDisplay = app.staticTexts["memoryDisplay"]
+        // 1
+        XCTAssert(memoryDisplay.exists)
+        // 2
+        memoryDisplay.swipeLeft()
+        // 3
+        XCTAssertFalse(memoryDisplay.exists)
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
