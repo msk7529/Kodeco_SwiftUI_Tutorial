@@ -52,6 +52,11 @@ final class SwiftCalcUITests: XCTestCase {
         
         let memoryButton = app.buttons["M+"]
         memoryButton.tap()
+        
+        let display = app.staticTexts["display"]
+        let displayText = display.label
+        
+        XCTAssert(displayText == "0")   // 텍스트가 0이 아니면 테스트 실패처리
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
