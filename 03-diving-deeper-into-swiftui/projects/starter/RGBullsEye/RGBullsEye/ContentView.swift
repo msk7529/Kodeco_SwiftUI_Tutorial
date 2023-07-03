@@ -33,60 +33,69 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State var game = Game()
-  @State var guess: RGB
-  @State var showScore = false
-
-  var body: some View {
-    VStack {
-      ColorCircle(rgb: game.target, size: 200)
-      if !showScore {
-        Text("R: ??? G: ??? B: ???")
-          .padding()
-      } else {
-        Text(game.target.intString())
-          .padding()
-      }
-      ColorCircle(rgb: guess, size: 200)
-      Text(guess.intString())
-        .padding()
-      ColorSlider(value: $guess.red, trackColor: .red)
-      ColorSlider(value: $guess.green, trackColor: .green)
-      ColorSlider(value: $guess.blue, trackColor: .blue)
-      Button("Hit Me!") {
-        showScore = true
-        game.check(guess: guess)
-      }
-      .alert(isPresented: $showScore) {
-        Alert(
-          title: Text("Your Score"),
-          message: Text(String(game.scoreRound)),
-          dismissButton: .default(Text("OK")) {
-            game.startNewRound()
-            guess = RGB()
-          })
-      }
+    
+    // @State: 프로퍼티 값이 변경되면 body를 다시 계산한다.
+    @State var game = Game()
+    @State var guess: RGB
+    @State var showScore = false
+    
+    var body: some View {
+        VStack {
+            ColorCircle(rgb: game.target, size: 200)
+            
+            if !showScore {
+                Text("R: ??? G: ??? B: ???")
+                    .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+            } else {
+                Text(game.target.intString())
+                    .padding()
+            }
+            
+            ColorCircle(rgb: guess, size: 200)
+            
+            Text(guess.intString())
+                .padding()
+            
+            ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
+            ColorSlider(value: $guess.green, trackColor: .green)
+            ColorSlider(value: $guess.blue, trackColor: .blue)
+            
+            Button("Hit Me!") {
+                showScore = true
+                game.check(guess: guess)
+            }
+            .alert(isPresented: $showScore) {
+                Alert(
+                    title: Text("Your Score"),
+                    message: Text(String(game.scoreRound)),
+                    dismissButton: .default(Text("OK")) {
+                        game.startNewRound()
+                        guess = RGB()
+                    })
+            }
+        }
     }
-  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView(guess: RGB())
-  }
+    
+    static var previews: some View {
+        ContentView(guess: RGB())
+    }
 }
 
 struct ColorSlider: View {
-  @Binding var value: Double
-  var trackColor: Color
-
-  var body: some View {
-    HStack {
-      Text("0")
-      Slider(value: $value)
-        .accentColor(trackColor)
-      Text("255")
+    
+    @Binding var value: Double  // 부모뷰로부터 초기값을 받아와 조작. 부모뷰에 전달된 값을 넘기기 위해 Binding으로 선언해야 함
+    var trackColor: Color
+    
+    var body: some View {
+        HStack {
+            Text("0")
+            Slider(value: $value)   // read-write binding
+                .accentColor(trackColor)    // slider의 minimumTrackTintColor 컬러를 정의
+            Text("255")
+        }
+        .padding(.horizontal)
     }
-    .padding(.horizontal)
-  }
 }
