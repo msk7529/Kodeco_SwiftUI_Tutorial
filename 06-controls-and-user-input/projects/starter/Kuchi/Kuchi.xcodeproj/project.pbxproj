@@ -30,6 +30,7 @@
 		C7E8E6932A533C2E00757991 /* WelcomeBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8E6922A533C2E00757991 /* WelcomeBackgroundImage.swift */; };
 		C7E8E6952A533D2000757991 /* LogoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8E6942A533D2000757991 /* LogoImage.swift */; };
 		C7E8E6972A533D6800757991 /* WelcomeMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8E6962A533D6800757991 /* WelcomeMessageView.swift */; };
+		C7E8E6992A533E1D00757991 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8E6982A533E1D00757991 /* RegisterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		C7E8E6922A533C2E00757991 /* WelcomeBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeBackgroundImage.swift; sourceTree = "<group>"; };
 		C7E8E6942A533D2000757991 /* LogoImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImage.swift; sourceTree = "<group>"; };
 		C7E8E6962A533D6800757991 /* WelcomeMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeMessageView.swift; sourceTree = "<group>"; };
+		C7E8E6982A533E1D00757991 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				C7E8E6912A533C2300757991 /* Components */,
 				579CB98A26EA1BE30009C09F /* WelcomeView.swift */,
+				C7E8E6982A533E1D00757991 /* RegisterView.swift */,
 				57F8DD6826EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift */,
 			);
 			path = Welcome;
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7E8E6992A533E1D00757991 /* RegisterView.swift in Sources */,
 				57EF341324E89F92004ABEB2 /* KuchiApp.swift in Sources */,
 				57349BB8298132EB00BA0ACF /* Profile.swift in Sources */,
 				579CB98B26EA1BE30009C09F /* WelcomeView.swift in Sources */,

@@ -32,18 +32,18 @@
 
 import SwiftUI
 
-@main
-struct KuchiApp: App {
-    
-    var body: some Scene {
-        WindowGroup {
-            RegisterView()
+struct RegisterView: View {
+    var body: some View {
+        ZStack {
+            WelcomeBackgroundImage()
+            VStack {
+                WelcomeMessageView()
+            }
         }
     }
 }
 
-struct KuchiApp_Previews: PreviewProvider {
-    
+struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()
     }
