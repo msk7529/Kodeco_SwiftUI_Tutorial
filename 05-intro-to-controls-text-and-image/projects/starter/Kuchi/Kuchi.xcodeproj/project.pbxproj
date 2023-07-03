@@ -81,8 +81,8 @@
 		57EF33FF24E89F91004ABEB2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				57578FA724E9D943003465A4 /* HomeView.swift */,
 				57EF340024E89F91004ABEB2 /* KuchiApp.swift */,
+				57578FA724E9D943003465A4 /* HomeView.swift */,
 				57578FA924E9D943003465A4 /* Resources */,
 			);
 			path = Shared;
