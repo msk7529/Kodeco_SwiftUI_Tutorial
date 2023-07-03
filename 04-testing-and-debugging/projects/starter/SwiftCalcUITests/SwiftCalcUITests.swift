@@ -60,6 +60,27 @@ final class SwiftCalcUITests: XCTestCase {
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+    
+    func testAddingTwoDigits() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let threeButton = app.buttons["3"]
+        threeButton.tap()
+        
+        let addButton = app.buttons["+"]
+        addButton.tap()
+        
+        let fiveButton = app.buttons["5"]
+        fiveButton.tap()
+        
+        let equalButton = app.buttons["="]
+        equalButton.tap()
+        
+        let display = app.staticTexts["display"]
+        let displayText = display.label
+        XCTAssert(displayText == "8.0")
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
