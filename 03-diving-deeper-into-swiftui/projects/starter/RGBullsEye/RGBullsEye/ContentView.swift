@@ -39,46 +39,54 @@ struct ContentView: View {
     @State var guess: RGB
     @State var showScore = false
     
+    let circleSize: CGFloat = 0.275
+    let labelHeight: CGFloat = 0.06
+    let labelWidth: CGFloat = 0.53
+    let buttonWidth: CGFloat = 0.87
+    
     var body: some View {
-        ZStack {
-            Color.element
-                .ignoresSafeArea()  // 화면 전체에 컬러 적용
+        GeometryReader { proxy in
+            // proxy.size: safeArea를 제외한 영역의 사이즈
+            ZStack {
+                Color.element
+                    .ignoresSafeArea()  // 화면 전체에 컬러 적용
 
-            VStack {
-                ColorCircle(rgb: game.target, size: 200)
-                
-                if !showScore {
-                    /* Text("R: ??? G: ??? B: ???")
-                        .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐 */
-                    BevelText(text: "R: ??? G: ??? B: ???", width: 200, height: 48)
-                } else {
-                    BevelText(text: game.target.intString(), width: 200, height: 48)
+                VStack {
+                    ColorCircle(rgb: game.target, size: 200)
+                    
+                    if !showScore {
+                        /* Text("R: ??? G: ??? B: ???")
+                            .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐 */
+                        BevelText(text: "R: ??? G: ??? B: ???", width: 200, height: 48)
+                    } else {
+                        BevelText(text: game.target.intString(), width: 200, height: 48)
+                    }
+                    
+                    ColorCircle(rgb: guess, size: 200)
+                    
+                    BevelText(text: guess.intString(), width: 200, height: 48)
+                    
+                    ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
+                    ColorSlider(value: $guess.green, trackColor: .green)
+                    ColorSlider(value: $guess.blue, trackColor: .blue)
+                    
+                    Button("Hit Me!") {
+                        showScore = true
+                        game.check(guess: guess)
+                    }
+                    .buttonStyle(NeuButtonStyle(width: 327, height: 48))
+                    .alert(isPresented: $showScore) {
+                        Alert(
+                            title: Text("Your Score"),
+                            message: Text(String(game.scoreRound)),
+                            dismissButton: .default(Text("OK")) {
+                                game.startNewRound()
+                                guess = RGB()
+                            })
+                    }
                 }
-                
-                ColorCircle(rgb: guess, size: 200)
-                
-                BevelText(text: guess.intString(), width: 200, height: 48)
-                
-                ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
-                ColorSlider(value: $guess.green, trackColor: .green)
-                ColorSlider(value: $guess.blue, trackColor: .blue)
-                
-                Button("Hit Me!") {
-                    showScore = true
-                    game.check(guess: guess)
-                }
-                .buttonStyle(NeuButtonStyle(width: 327, height: 48))
-                .alert(isPresented: $showScore) {
-                    Alert(
-                        title: Text("Your Score"),
-                        message: Text(String(game.scoreRound)),
-                        dismissButton: .default(Text("OK")) {
-                            game.startNewRound()
-                            guess = RGB()
-                        })
-                }
+                .font(.headline)    // VStack 내의 텍스트에 headline 폰트스타일 적용
             }
-            .font(.headline)    // VStack 내의 텍스트에 headline 폰트스타일 적용
         }
     }
 }
@@ -87,6 +95,7 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         ContentView(guess: RGB())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
     }
 }
 
