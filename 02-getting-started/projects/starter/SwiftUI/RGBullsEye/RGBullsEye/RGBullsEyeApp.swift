@@ -34,9 +34,9 @@ import SwiftUI
 
 @main
 struct RGBullsEyeApp: App {
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
     }
-  }
 }

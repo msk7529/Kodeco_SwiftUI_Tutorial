@@ -33,14 +33,14 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
-    Text("Hello, world!")
-      .padding()
-  }
+    var body: some View {
+        Text("R: ??? G: ??? B: ???")
+            .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView()
-  }
+    static var previews: some View {
+        ContentView()
+    }
 }
