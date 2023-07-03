@@ -35,14 +35,14 @@ import SwiftUI
 struct ContentView: View {
     
     // @State: 프로퍼티 값이 변경되면 body를 다시 계산한다.
-    @State var game = Game()
+    @State private var game = Game()
     @State var guess: RGB
     @State private var showScore = false
     
     var body: some View {
         VStack {
-            Color(rgbStruct: game.target)
-            
+            ColorCircle(rgb: game.target)
+
             if !showScore {
                 Text("R: ??? G: ??? B: ???")
                     .padding() // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
@@ -51,8 +51,8 @@ struct ContentView: View {
                     .padding()
             }
 
-            Color(rgbStruct: guess)
-            
+            ColorCircle(rgb: guess)
+
             Text(guess.intString())
                 .padding()
             
@@ -74,8 +74,8 @@ struct ContentView: View {
     }
 }
 
-struct ColorSlider: View {
-    
+private struct ColorSlider: View {
+
     @Binding var value: Double  // 부모뷰로부터 초기값을 받아와 조작. 부모뷰에 전달된 값을 넘기기 위해 Binding으로 선언
     var trackColor: Color
     
@@ -87,6 +87,16 @@ struct ColorSlider: View {
             Text("255")
         }
         .padding(.horizontal)
+    }
+}
+
+private struct ColorCircle: View {
+    
+    let rgb: RGB
+    
+    var body: some View {
+        Circle()
+            .fill(Color(rgbStruct: rgb))
     }
 }
 
