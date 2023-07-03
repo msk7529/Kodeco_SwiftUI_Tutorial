@@ -68,11 +68,7 @@ struct ContentView: View {
                     showScore = true
                     game.check(guess: guess)
                 }
-                .frame(width: 327, height: 48)
-                .background(Capsule()   // RoundedRectangle
-                    .fill(Color.element)
-                    .northWestShadow()
-                )
+                .buttonStyle(NeuButtonStyle(width: 327, height: 48))
                 .alert(isPresented: $showScore) {
                     Alert(
                         title: Text("Your Score"),
