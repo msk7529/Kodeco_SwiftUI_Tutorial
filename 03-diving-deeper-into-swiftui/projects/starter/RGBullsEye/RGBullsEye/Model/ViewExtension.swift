@@ -32,33 +32,27 @@
 
 import SwiftUI
 
-struct ColorCircle: View {
+extension View {
     
-    let rgb: RGB
-    let size: CGFloat
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .fill(Color.element)
-                .northWestShadow()
-            Circle()
-                .fill(Color(red: rgb.red, green: rgb.green, blue: rgb.blue))
-                .northWestShadow()
-                .padding(20)
-        }
-        .frame(width: size, height: size)
+    func northWestShadow(
+        radius: CGFloat = 16,
+        offset: CGFloat = 6
+    ) -> some View {
+        return self
+            .shadow(
+                color: .highlight, radius: radius, x: -offset, y: -offset)  // 좌상단에 highlight 컬러의 그림자 적용
+            .shadow(
+                color: .shadow, radius: radius, x: offset, y: offset)   // 우하단에 shadow 컬러의 그림자 적용
     }
-}
-
-struct ColorCircle_Previews: PreviewProvider {
     
-    static var previews: some View {
-        ZStack {
-            Color.element
-            ColorCircle(rgb: RGB(), size: 200)
-        }
-        .frame(width: 300, height: 300)
-        .previewLayout(.sizeThatFits)
+    func southEastShadow(
+        radius: CGFloat = 16,
+        offset: CGFloat = 6
+    ) -> some View {
+        return self
+            .shadow(
+                color: .shadow, radius: radius, x: -offset, y: -offset)
+            .shadow(
+                color: .highlight, radius: radius, x: offset, y: offset)
     }
 }

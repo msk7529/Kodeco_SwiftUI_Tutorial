@@ -40,38 +40,43 @@ struct ContentView: View {
     @State var showScore = false
     
     var body: some View {
-        VStack {
-            ColorCircle(rgb: game.target, size: 200)
-            
-            if !showScore {
-                Text("R: ??? G: ??? B: ???")
-                    .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
-            } else {
-                Text(game.target.intString())
+        ZStack {
+            Color.element
+                .ignoresSafeArea()  // 화면 전체에 컬러 적용
+
+            VStack {
+                ColorCircle(rgb: game.target, size: 200)
+                
+                if !showScore {
+                    Text("R: ??? G: ??? B: ???")
+                        .padding()  // padding 값을 지정하지 않으면 content와 디바이스에 따라 자동으로 정해짐
+                } else {
+                    Text(game.target.intString())
+                        .padding()
+                }
+                
+                ColorCircle(rgb: guess, size: 200)
+                
+                Text(guess.intString())
                     .padding()
-            }
-            
-            ColorCircle(rgb: guess, size: 200)
-            
-            Text(guess.intString())
-                .padding()
-            
-            ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
-            ColorSlider(value: $guess.green, trackColor: .green)
-            ColorSlider(value: $guess.blue, trackColor: .blue)
-            
-            Button("Hit Me!") {
-                showScore = true
-                game.check(guess: guess)
-            }
-            .alert(isPresented: $showScore) {
-                Alert(
-                    title: Text("Your Score"),
-                    message: Text(String(game.scoreRound)),
-                    dismissButton: .default(Text("OK")) {
-                        game.startNewRound()
-                        guess = RGB()
-                    })
+                
+                ColorSlider(value: $guess.red, trackColor: .red)    // read-write binding
+                ColorSlider(value: $guess.green, trackColor: .green)
+                ColorSlider(value: $guess.blue, trackColor: .blue)
+                
+                Button("Hit Me!") {
+                    showScore = true
+                    game.check(guess: guess)
+                }
+                .alert(isPresented: $showScore) {
+                    Alert(
+                        title: Text("Your Score"),
+                        message: Text(String(game.scoreRound)),
+                        dismissButton: .default(Text("OK")) {
+                            game.startNewRound()
+                            guess = RGB()
+                        })
+                }
             }
         }
     }
