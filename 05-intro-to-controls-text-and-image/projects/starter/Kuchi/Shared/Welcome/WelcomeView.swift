@@ -32,16 +32,18 @@
 
 import SwiftUI
 
-@main
-struct KuchiApp: App {
-    var body: some Scene {
-        WindowGroup {
-            WelcomeView()
-        }
+struct WelcomeView: View {
+    var body: some View {
+        Text("Welcome to Kuchi")
+            .font(.system(size: 60))
+            .bold()
+            .foregroundColor(.red)
+            .multilineTextAlignment(.center)
+            .lineLimit(2)
     }
 }
 
-struct KuchiApp_Previews: PreviewProvider {
+struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
     }
