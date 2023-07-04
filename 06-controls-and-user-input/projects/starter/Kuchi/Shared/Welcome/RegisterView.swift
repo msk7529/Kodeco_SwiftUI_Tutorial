@@ -34,7 +34,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @State var name: String = ""
+    @EnvironmentObject var userManager: UserManager
     
     var body: some View {
         VStack {
@@ -46,15 +46,26 @@ struct RegisterView: View {
             TextField("Type your name...", text: $name)
                 .textFieldStyle(KuchiTextStyle()) */
             
-            TextField("Type your name...", text: $name)
+            TextField("Type your name...", text: $userManager.profile.name)
                 .submitLabel(.done)     // 키보드 return 버튼을 done으로 변경
                 .bordered()     // ViewModifier을 이용한 커스터마이징
+            
+            Button(action: registerUser) {
+              Text("OK")
+            }
             
             Spacer()
         }
         .padding()  // 텍스트필드 좌우 패딩을 주기 위함
         .background(WelcomeBackgroundImage())
     }
+}
+
+extension RegisterView {
+    
+    func registerUser() {
+        userManager.persistProfile()
+      }
 }
 
 struct KuchiTextStyle: TextFieldStyle {
@@ -72,7 +83,11 @@ struct KuchiTextStyle: TextFieldStyle {
 }
 
 struct RegisterView_Previews: PreviewProvider {
+    
+    static let user = UserManager(name: "Ray")
+    
     static var previews: some View {
         RegisterView()
+            .environmentObject(user)    // UserManager 주입
     }
 }
