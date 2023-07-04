@@ -45,3 +45,9 @@ struct BorderedViewModifier: ViewModifier {
             .shadow(color: .gray.opacity(0.4), radius: 3, x: 1, y: 2)
     }
 }
+
+extension View {
+    func bordered() -> some View {
+        ModifiedContent(content: self, modifier: BorderedViewModifier())
+    }
+}

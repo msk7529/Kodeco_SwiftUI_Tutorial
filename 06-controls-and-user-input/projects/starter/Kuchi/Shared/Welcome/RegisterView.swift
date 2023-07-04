@@ -46,7 +46,8 @@ struct RegisterView: View {
             TextField("Type your name...", text: $name)
                 .textFieldStyle(KuchiTextStyle()) */
             
-            ModifiedContent(content: TextField("Type your name...", text: $name), modifier: BorderedViewModifier())     // ViewModifier을 통한 커스터마이징
+            TextField("Type your name...", text: $name)
+                .bordered()     // ViewModifier을 이용한 커스터마이징
             
             Spacer()
         }
