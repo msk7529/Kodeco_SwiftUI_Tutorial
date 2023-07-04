@@ -51,7 +51,15 @@ struct RegisterView: View {
                 .bordered()     // ViewModifier을 이용한 커스터마이징
             
             Button(action: registerUser) {
-              Text("OK")
+                HStack {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .frame(width: 16, height: 16, alignment: .center)
+                    Text("OK")
+                        .font(.body)
+                        .bold()
+                }
+                .bordered()
             }
             
             Spacer()
