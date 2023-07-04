@@ -34,6 +34,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
+    @FocusState var nameFieldFocused: Bool
     @EnvironmentObject var userManager: UserManager
     
     var body: some View {
@@ -47,7 +48,9 @@ struct RegisterView: View {
                 .textFieldStyle(KuchiTextStyle()) */
             
             TextField("Type your name...", text: $userManager.profile.name)
+                .focused($nameFieldFocused)
                 .submitLabel(.done)     // 키보드 return 버튼을 done으로 변경
+                .onSubmit(registerUser)
                 .bordered()     // ViewModifier을 이용한 커스터마이징
             
             HStack {
@@ -94,6 +97,8 @@ struct RegisterView: View {
 extension RegisterView {
     
     func registerUser() {
+        nameFieldFocused = false
+        
         if userManager.settings.rememberUser {
             userManager.persistProfile()
         } else {
