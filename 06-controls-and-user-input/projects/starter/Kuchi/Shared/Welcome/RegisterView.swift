@@ -58,7 +58,18 @@ struct RegisterView: View {
                     .foregroundColor(userManager.isUserNameValid() ? .green : .red)
                     .padding(.trailing)
             }
-            .padding(.bottom)   // OK 버튼과 간격을 띄우기 위함
+            .padding(.bottom)   // 아래 요소와 간격을 띄우기 위함
+            
+            HStack {
+                Spacer()
+                
+                Toggle(isOn: $userManager.settings.rememberUser) {
+                    Text("Remember me")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .fixedSize()    // 이게 없으면 Toggle이 수평으로 확장됨
+            }
             
             Button(action: registerUser) {
                 HStack {
@@ -83,8 +94,15 @@ struct RegisterView: View {
 extension RegisterView {
     
     func registerUser() {
-        userManager.persistProfile()
-      }
+        if userManager.settings.rememberUser {
+            userManager.persistProfile()
+        } else {
+            userManager.clear()
+        }
+        
+        userManager.persistSettings()
+        userManager.setRegistered()
+    }
 }
 
 struct KuchiTextStyle: TextFieldStyle {
