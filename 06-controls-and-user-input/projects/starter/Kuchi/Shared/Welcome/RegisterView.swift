@@ -47,6 +47,7 @@ struct RegisterView: View {
                 .textFieldStyle(KuchiTextStyle()) */
             
             TextField("Type your name...", text: $name)
+                .submitLabel(.done)     // 키보드 return 버튼을 done으로 변경
                 .bordered()     // ViewModifier을 이용한 커스터마이징
             
             Spacer()
