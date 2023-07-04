@@ -50,6 +50,16 @@ struct RegisterView: View {
                 .submitLabel(.done)     // 키보드 return 버튼을 done으로 변경
                 .bordered()     // ViewModifier을 이용한 커스터마이징
             
+            HStack {
+                Spacer()    // Text를 오른쪽으로 밀기 위해 사용
+                
+                Text("\(userManager.profile.name.count)")
+                    .font(.caption)
+                    .foregroundColor(userManager.isUserNameValid() ? .green : .red)
+                    .padding(.trailing)
+            }
+            .padding(.bottom)   // OK 버튼과 간격을 띄우기 위함
+            
             Button(action: registerUser) {
                 HStack {
                     Image(systemName: "checkmark")
