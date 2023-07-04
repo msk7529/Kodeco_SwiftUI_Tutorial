@@ -43,12 +43,36 @@ struct RegisterView: View {
             WelcomeMessageView()
             
             TextField("Type your name...", text: $name)
+                .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))   // 텍스트필드 내에 상하좌우 인셋 적용
+                .background(.white)
+                .overlay(RoundedRectangle(cornerRadius: 8)
+                    .stroke(lineWidth: 2)   // 스트로크 효과를 추가하여 테두리만 유지하고 뒷 내용은 보이게 한다.
+                    .foregroundColor(.blue)
+                )
+                .shadow(color: .gray.opacity(0.4), radius: 3, x: 1, y: 2)
+                //.textFieldStyle(KuchiTextStyle())
             
             Spacer()
         }
+        .padding()  // 텍스트필드 좌우 패딩을 주기 위함
         .background(WelcomeBackgroundImage())
     }
 }
+
+/*
+struct KuchiTextStyle: TextFieldStyle {
+    
+    public func _body(configuration: TextField<Self._Label>) -> some View {
+        return configuration
+            .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))   // 텍스트필드 내에 상하좌우 인셋 적용
+            .background(.white)
+            .overlay(RoundedRectangle(cornerRadius: 8)
+                .stroke(lineWidth: 2)   // 스트로크 효과를 추가하여 테두리만 유지하고 뒷 내용은 보이게 한다.
+                .foregroundColor(.blue)
+            )
+            .shadow(color: .gray.opacity(0.4), radius: 3, x: 1, y: 2)
+    }
+}*/
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
