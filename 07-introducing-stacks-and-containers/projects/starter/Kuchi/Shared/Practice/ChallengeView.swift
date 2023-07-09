@@ -91,6 +91,14 @@ struct ChallengeView: View {
         }
         .background(Color.yellow)
          */
+        
+        HStack(alignment: .firstTextBaseline, spacing: nil) {
+            // alignment: default center
+            // spacing: default nil. OS에서 자동으로 정해줌
+            Text("Welcome to Kuchi").font(.caption)
+            Text("Welcome to Kuchi").font(.title)
+            Button(action: {}, label: { Text("OK").font(.body) })
+        }
     }
 }
 
