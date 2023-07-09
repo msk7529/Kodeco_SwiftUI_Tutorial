@@ -49,6 +49,40 @@ struct CongratulationsView: View {
                 .font(.title)
                 .foregroundColor(.gray)
             
+            ZStack {
+                // 첫번째로 추가된 뷰가 맨 아래로 들어간다.
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .frame(height: 90)
+                        .foregroundColor(
+                            Color(red: 0.5, green: 0, blue: 0).opacity(0.2))
+                    Rectangle()
+                        .frame(height: 90)
+                        .foregroundColor(
+                            Color(red: 0.6, green: 0.1, blue: 0.1).opacity(0.4))
+                }
+                
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .padding()
+                    .frame(width: avatarSize, height: avatarSize)
+                    .background(Color.white.opacity(0.5))
+                    .cornerRadius(avatarSize / 2, antialiased: true)
+                    .shadow(radius: 4)
+                
+                VStack() {
+                    Spacer()
+                    Text(userName)
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .shadow(radius: 7)
+                }
+                .padding()
+            }
+            .frame(height: 180) // ZStack 전체 높이
+            
+            
             Text("You’re awesome!")
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
