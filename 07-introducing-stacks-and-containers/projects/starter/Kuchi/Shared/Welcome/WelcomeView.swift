@@ -33,28 +33,36 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    
+    @EnvironmentObject var userManager: UserManager
+    @ObservedObject var challengesViewModel = ChallengesViewModel()
+    @State var showPractice = false
+    
     var body: some View {
-        ZStack {
-            WelcomeBackgroundImage()
-            
-            /*
-            HStack {
+        if showPractice {
+            PracticeView(
+                challengeTest: $challengesViewModel.currentChallenge,
+                userName: $userManager.profile.name
+            )
+        } else {
+            ZStack {
                 WelcomeBackgroundImage()
                 
-                VStack(alignment: .leading) {
-                    Text("Welcome to")
-                        .font(.headline)
-                        .bold()
-                    Text("Kuchi")
-                        .font(.largeTitle)
-                        .bold()
+                VStack {
+                    Text(verbatim: "Hi, \(userManager.profile.name)")
+                    
+                    WelcomeMessageView()
+                    
+                    Button(action: {
+                        self.showPractice = true
+                    }, label: {
+                        HStack {
+                            Image(systemName: "play")
+                            Text(verbatim: "Start")
+                        }
+                    })
                 }
-                .foregroundColor(.red)
-                .lineLimit(1)
-                .padding(.horizontal)
-            }*/
-            
-            WelcomeMessageView()
+            }
         }
     }
 }
@@ -62,5 +70,6 @@ struct WelcomeView: View {
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
+            .environmentObject(UserManager())
     }
 }
