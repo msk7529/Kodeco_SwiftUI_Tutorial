@@ -56,6 +56,7 @@ struct ChallengeTest {
 }
 
 class ChallengesViewModel: ObservableObject {
+    
     static let challenges: [Challenge] = [
         Challenge(question: "はい", pronunciation: "Hai", answer: "Yes"),
         Challenge(question: "いいえ", pronunciation: "iie", answer: "No"),
