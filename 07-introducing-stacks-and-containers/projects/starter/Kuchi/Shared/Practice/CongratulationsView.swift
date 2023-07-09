@@ -45,6 +45,8 @@ struct CongratulationsView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            
             Text("Congratulations!")
                 .font(.title)
                 .foregroundColor(.gray)
@@ -86,6 +88,8 @@ struct CongratulationsView: View {
             Text("You’re awesome!")
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
+            
+            Spacer()
             
             Button(action: {
                 challengesViewModel.restart()
