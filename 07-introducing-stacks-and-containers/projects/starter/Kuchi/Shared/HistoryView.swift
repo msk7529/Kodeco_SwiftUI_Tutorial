@@ -56,6 +56,7 @@ struct History: Hashable {
 }
 
 struct HistoryView: View {
+    
     let history = History.random(count: 2000)
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -79,6 +80,7 @@ struct HistoryView: View {
             Text("\(dateFormatter.string(from: element.date))")
                 .font(.caption2)
                 .foregroundColor(.blue)
+            
             HStack {
                 VStack {
                     Text("Question:")
@@ -111,12 +113,24 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        EmptyView()
+        ScrollView {
+            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                // pinnedViews: 스크롤해도 sectionHeaders를 항상 상단에 노출
+                Section(header: header) {
+                    ForEach(history, id: \.self) { element in
+                        // ForEach: 동적으로 뷰를 만들어낼 때 사용
+                        // history: iteration을 도는 집합체, id: element type의 key path. Hashable을 채택하는 property를 써야함. 위의 경우는 History가 Hashable을 채택하고 있어서 그 자체로 id를 사용한 케이스.
+                        getElement(element)
+                    }
+                }
+            }
+        }
     }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         HistoryView()
+            .previewDevice(.init(rawValue: "iPhone 14 Pro"))
     }
 }
