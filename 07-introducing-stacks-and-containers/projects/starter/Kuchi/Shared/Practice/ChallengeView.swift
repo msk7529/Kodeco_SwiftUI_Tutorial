@@ -33,8 +33,14 @@
 import SwiftUI
 
 struct ChallengeView: View {
+    
     var body: some View {
-        Text("Hello World!")
+        Text("A great and warm welcome to Kuchi")
+            .background(Color.red)
+            .frame(width: 100, height: 50, alignment: .center)
+            // Add this scale factor
+            .minimumScaleFactor(0.5)
+            .background(Color.yellow)
     }
 }
 
