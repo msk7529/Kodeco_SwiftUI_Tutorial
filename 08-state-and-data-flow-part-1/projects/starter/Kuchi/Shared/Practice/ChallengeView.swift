@@ -50,7 +50,7 @@ struct ChallengeView: View {
                     .frame(height: 300)
             }
                         
-            ScoreView(numberOfAnswered: numberOfAnswered, numberOfQuestions: 5)
+            ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
             
             Text("ChallengeView Counter: \(numberOfAnswered)")
             
