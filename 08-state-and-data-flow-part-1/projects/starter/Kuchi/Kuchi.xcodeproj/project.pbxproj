@@ -55,6 +55,8 @@
 		57EF341424E89F92004ABEB2 /* KuchiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EF340024E89F91004ABEB2 /* KuchiApp.swift */; };
 		57F8DD6926EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8DD6826EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift */; };
 		57F8DD6A26EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8DD6826EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift */; };
+		C7C69AC22A5C60A50099802A /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C69AC12A5C60A50099802A /* ScoreView.swift */; };
+		C7C69AC32A5C60A50099802A /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C69AC12A5C60A50099802A /* ScoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +89,7 @@
 		57EF341124E89F92004ABEB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57EF341224E89F92004ABEB2 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		57F8DD6826EEC01300153B9F /* HorizontallyAlignedLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontallyAlignedLabelStyle.swift; sourceTree = "<group>"; };
+		C7C69AC12A5C60A50099802A /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,7 @@
 				5709633929927F0800F42928 /* PracticeView.swift */,
 				5709633A29927F0800F42928 /* ChallengeView.swift */,
 				5709633B29927F0800F42928 /* ChoicesRow.swift */,
+				C7C69AC12A5C60A50099802A /* ScoreView.swift */,
 			);
 			path = Practice;
 			sourceTree = "<group>";
@@ -330,6 +334,7 @@
 				57234F7F2986E3D400D84761 /* BorderedViewModifier.swift in Sources */,
 				57349BB8298132EB00BA0ACF /* Profile.swift in Sources */,
 				579CB98B26EA1BE30009C09F /* WelcomeView.swift in Sources */,
+				C7C69AC22A5C60A50099802A /* ScoreView.swift in Sources */,
 				5709634D29927F0800F42928 /* HistoryView.swift in Sources */,
 				57234F7929853D4A00D84761 /* WelcomeMessageView.swift in Sources */,
 				5709634729927F0800F42928 /* PracticeView.swift in Sources */,
@@ -358,6 +363,7 @@
 				57234F802986E3D400D84761 /* BorderedViewModifier.swift in Sources */,
 				57349BB9298132EB00BA0ACF /* Profile.swift in Sources */,
 				579CB98C26EA1BE30009C09F /* WelcomeView.swift in Sources */,
+				C7C69AC32A5C60A50099802A /* ScoreView.swift in Sources */,
 				5709634E29927F0800F42928 /* HistoryView.swift in Sources */,
 				57234F7A29853D4A00D84761 /* WelcomeMessageView.swift in Sources */,
 				5709634829927F0800F42928 /* PracticeView.swift in Sources */,

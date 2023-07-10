@@ -48,6 +48,8 @@ struct ChallengeView: View {
                     .frame(height: 300)
             }
             
+            ScoreView()
+            
             if showAnswers {
                 Divider()
                 ChoicesView(challengeTest: challengeTest)
