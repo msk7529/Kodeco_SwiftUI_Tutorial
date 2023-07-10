@@ -32,10 +32,19 @@
 
 import SwiftUI
 
+class Box<T> {
+    
+    var wrappedValue: T
+    
+    init(initialValue value: T) {
+        self.wrappedValue = value
+    }
+}
+
 struct ScoreView: View {
     
-    class State {
-        var numberOfAnswered = 0
+    struct State {
+        var numberOfAnswered = Box<Int>(initialValue: 0)
     }
     
     let state = State()
@@ -43,11 +52,11 @@ struct ScoreView: View {
     
     var body: some View {
         Button(action: {
-            self.state.numberOfAnswered += 1
-            print("Answered: \(self.state.numberOfAnswered)")
+            self.state.numberOfAnswered.wrappedValue += 1
+            print("Answered: \(self.state.numberOfAnswered.wrappedValue)")
         }) {
             HStack {
-                Text("\(state.numberOfAnswered)/\(numberOfQuestions)")
+                Text("\(state.numberOfAnswered.wrappedValue)/\(numberOfQuestions)")
                     .font(.caption)
                     .padding(4)
                 Spacer()
