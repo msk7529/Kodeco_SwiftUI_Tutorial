@@ -34,15 +34,20 @@ import SwiftUI
 
 struct ScoreView: View {
     
-    var numberOfAnswered = 0
+    class State {
+        var numberOfAnswered = 0
+    }
+    
+    let state = State()
     var numberOfQuestions = 5
     
     var body: some View {
         Button(action: {
-            self.numberOfAnswered += 1
+            self.state.numberOfAnswered += 1
+            print("Answered: \(self.state.numberOfAnswered)")
         }) {
             HStack {
-                Text("\(numberOfAnswered)/\(numberOfQuestions)")
+                Text("\(state.numberOfAnswered)/\(numberOfQuestions)")
                     .font(.caption)
                     .padding(4)
                 Spacer()
