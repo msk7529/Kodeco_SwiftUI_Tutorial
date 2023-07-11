@@ -34,7 +34,7 @@ import SwiftUI
 
 struct ScoreView: View {
     
-    @State var numberOfAnswered: Int = 0
+    @Binding var numberOfAnswered: Int
     
     let numberOfQuestions: Int
     
@@ -54,6 +54,6 @@ struct ScoreView_Previews: PreviewProvider {
     @State static var numberOfAnswered: Int = 0
     
     static var previews: some View {
-        ScoreView(numberOfQuestions: 5)
+        ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
     }
 }
