@@ -45,6 +45,7 @@ struct WelcomeView: View {
                 userName: $userManager.profile.name,
                 numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)   // getter property를 @Binding 으로 넘기고자 할 때 사용
             )
+            // .environment(\.verticalSizeClass, .compact) // 해당 뷰의 방향을 고정
         } else {
             ZStack {
                 WelcomeBackgroundImage()

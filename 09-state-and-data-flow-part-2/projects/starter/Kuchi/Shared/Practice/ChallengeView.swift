@@ -39,23 +39,47 @@ struct ChallengeView: View {
     @State var showAnswers = false
     @Binding var numberOfAnswered: Int
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass     // 디바이스 회전시에 값이 변경됨
+    
     var body: some View {
         
-        VStack {
-            Button(action: {
-                showAnswers.toggle()
-            }) {
-                QuestionView(question: challengeTest.challenge.question)
-                    .frame(height: 300)
+        if verticalSizeClass == .compact {
+            VStack {
+                HStack {
+                    Button(action: {
+                        showAnswers.toggle()
+                    }) {
+                        QuestionView(question: challengeTest.challenge.question)
+                            .frame(height: 300)
+                    }
+                    
+                    if showAnswers {
+                        Divider()
+                        ChoicesView(challengeTest: challengeTest)
+                            .frame(height: 300)
+                            .padding()
+                    }
+                }
+                
+                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
             }
-                        
-            ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
-                        
-            if showAnswers {
-                Divider()
-                ChoicesView(challengeTest: challengeTest)
-                    .frame(height: 300)
-                    .padding()
+        } else {
+            VStack {
+                Button(action: {
+                    showAnswers.toggle()
+                }) {
+                    QuestionView(question: challengeTest.challenge.question)
+                        .frame(height: 300)
+                }
+                
+                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
+                
+                if showAnswers {
+                    Divider()
+                    ChoicesView(challengeTest: challengeTest)
+                        .frame(height: 300)
+                        .padding()
+                }
             }
         }
         
