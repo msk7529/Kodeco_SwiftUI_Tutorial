@@ -35,6 +35,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @State var numberOfQuestions = 6
+    @State var learningEnabled: Bool = true
 
     var body: some View {
         List {
@@ -44,7 +45,7 @@ struct SettingsView: View {
             
             Section(header: Text("Appearance")) {
             }
-            
+                        
             Section(header: Text("Game")) {
                 VStack(alignment: .leading) {
                     Stepper(
@@ -56,6 +57,8 @@ struct SettingsView: View {
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
+                
+                Toggle("Learning Enabled", isOn: $learningEnabled)
             }
             
             Section(header: Text("Notifications")) {
