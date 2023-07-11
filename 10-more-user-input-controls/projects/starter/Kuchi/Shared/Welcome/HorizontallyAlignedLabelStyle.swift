@@ -33,10 +33,12 @@
 import SwiftUI
 
 struct HorizontallyAlignedLabelStyle: LabelStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    HStack {
-      configuration.icon
-      configuration.title
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            // HStack은 기본적으로 모든 자식을 중앙 정렬함
+            configuration.icon
+            configuration.title
+        }
     }
-  }
 }

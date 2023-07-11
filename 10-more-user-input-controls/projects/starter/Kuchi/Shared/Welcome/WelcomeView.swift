@@ -33,47 +33,46 @@
 import SwiftUI
 
 struct WelcomeView: View {
-  @EnvironmentObject var userManager: UserManager
-  @EnvironmentObject var challengesViewModel: ChallengesViewModel
-  @State var showPractice = false
-  
-  var body: some View {
-    if showPractice {
-      PracticeView(
-        challengeTest: $challengesViewModel.currentChallenge,
-        userName: $userManager.profile.name,
-        numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)
-      )
-      .environment(
-        \.questionsPerSession,
-         challengesViewModel.numberOfQuestions
-      )
-    } else {
-      ZStack {
-        WelcomeBackgroundImage()
-        
-        VStack {
-          Text(verbatim: "Hi, \(userManager.profile.name)")
-          
-          WelcomeMessageView()
-          
-          Button {
-            showPractice = true
-          } label: {
-            HStack {
-              Image(systemName: "play")
-              Text(verbatim: "Start")
+    
+    @EnvironmentObject var userManager: UserManager
+    @EnvironmentObject var challengesViewModel: ChallengesViewModel
+    @State var showPractice = false
+    
+    var body: some View {
+        if showPractice {
+            PracticeView(
+                challengeTest: $challengesViewModel.currentChallenge,
+                userName: $userManager.profile.name,
+                numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)   // getter property를 @Binding 으로 넘기고자 할 때 사용
+            )
+            .environment(\.questionsPerSession, challengesViewModel.numberOfQuestions)
+            // .environment(\.verticalSizeClass, .compact) // 해당 뷰의 방향을 고정
+        } else {
+            ZStack {
+                WelcomeBackgroundImage()
+                
+                VStack {
+                    Text(verbatim: "Hi, \(userManager.profile.name)")
+                    
+                    WelcomeMessageView()
+                    
+                    Button {
+                        showPractice = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "play")
+                            Text(verbatim: "Start")
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }
 
 struct WelcomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeView()
-      .environmentObject(UserManager())
-  }
+    static var previews: some View {
+        WelcomeView()
+            .environmentObject(UserManager())
+    }
 }
