@@ -32,23 +32,27 @@
 
 import SwiftUI
 
-struct StarterView: View {
-    
-    @EnvironmentObject var userViewModel: UserManager
-    
+struct SettingsView: View {
     var body: some View {
-        SettingsView()
-//        if userViewModel.isRegistered {
-//            WelcomeView()
-//        } else {
-//            RegisterView()
-//        }
+        List {
+            Text("Settings")
+                .font(.largeTitle)
+                .padding(.bottom, 8)
+            
+            Section(header: Text("Appearance")) {
+            }
+            
+            Section(header: Text("Game")) {
+            }
+            
+            Section(header: Text("Notifications")) {
+            }
+        }
     }
 }
 
-struct StarterView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        StarterView()
-            .environmentObject(UserManager())
+        SettingsView()
     }
 }
