@@ -33,22 +33,23 @@
 import SwiftUI
 
 struct WelcomeBackgroundImage: View {
-  var body: some View {
-    GeometryReader { geometry in
-      Image("welcome-background")
-        .resizable()
-        .aspectRatio(1 / 1, contentMode: .fill)
-        .frame(width: geometry.size.width, alignment: .center)
-        .edgesIgnoringSafeArea(.all)
-        .saturation(0.5)
-        .blur(radius: 5)
-        .opacity(0.08)
+    var body: some View {
+        GeometryReader { geometry in
+            Image("welcome-background", bundle: nil)
+                .resizable()
+                .scaledToFit() // 원본 비율을 유지해서 부모에서 이미지가 완전히 보이도록 함. 바로 아래에서 fill로 채우기 때문에 주석해도 무관함.
+                .aspectRatio(1 / 1, contentMode: .fill) // 1 / 1: 기본 설정, fill: 상위 뷰 전체를 채움
+                .frame(width: geometry.size.width, alignment: .center)  // 키보드가 올라오면 이미지가 오른쪽으로 밀리는 문제를 방지하기 위함
+                .edgesIgnoringSafeArea(.all)
+                .saturation(0.5)    // 채도를 낮춘다.
+                .blur(radius: 5)
+                .opacity(0.08)
+        }
     }
-  }
 }
 
 struct WelcomeBackgroundImage_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeBackgroundImage()
-  }
+    static var previews: some View {
+        WelcomeBackgroundImage()
+    }
 }

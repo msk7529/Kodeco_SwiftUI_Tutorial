@@ -193,8 +193,8 @@
 				579CB98926EA18AA0009C09F /* Welcome */,
 				5709633C29927F0800F42928 /* HistoryView.swift */,
 				57578FA724E9D943003465A4 /* HomeView.swift */,
-				57EF340024E89F91004ABEB2 /* KuchiApp.swift */,
 				5709633329927F0800F42928 /* StarterView.swift */,
+				57EF340024E89F91004ABEB2 /* KuchiApp.swift */,
 				57578FA924E9D943003465A4 /* Resources */,
 			);
 			path = Shared;
