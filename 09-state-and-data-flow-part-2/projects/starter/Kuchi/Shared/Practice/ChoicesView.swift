@@ -39,8 +39,8 @@ struct ChoicesView : View {
     let challengeTest: ChallengeTest
     @State var challengeSolved = false
     @State var isChallengeResultAlertDisplayed = false
-    @ObservedObject var challengesViewModel = ChallengesViewModel()
-    
+    @EnvironmentObject var challengesViewModel: ChallengesViewModel
+
     var body: some View {
         VStack(spacing: 25) {
             ForEach(0 ..< challengeTest.answers.count, id: \.self) { index in

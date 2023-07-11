@@ -36,6 +36,7 @@ import SwiftUI
 struct KuchiApp: App {
     
     let userManager = UserManager()
+    let challengesViewModel = ChallengesViewModel()
     
     init() {
         userManager.load()
@@ -45,14 +46,18 @@ struct KuchiApp: App {
         WindowGroup {
             StarterView()
                 .environmentObject(userManager)
+                .environmentObject(challengesViewModel)
         }
     }
 }
 
 struct KuchiApp_Previews: PreviewProvider {
     static let userManager = UserManager(name: "Ray")
+    static let challengesViewModel = ChallengesViewModel()
+    
     static var previews: some View {
         StarterView()
             .environmentObject(userManager)
+            .environmentObject(challengesViewModel)
     }
 }
