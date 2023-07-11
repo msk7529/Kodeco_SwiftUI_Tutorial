@@ -40,6 +40,7 @@ struct ChallengeView: View {
     @Binding var numberOfAnswered: Int
     
     @Environment(\.verticalSizeClass) var verticalSizeClass     // 디바이스 회전시에 값이 변경됨
+    @Environment(\.questionsPerSession) var questionsPerSession
     
     var body: some View {
         
@@ -61,7 +62,7 @@ struct ChallengeView: View {
                     }
                 }
                 
-                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
+                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: questionsPerSession)
             }
         } else {
             VStack {
@@ -72,7 +73,7 @@ struct ChallengeView: View {
                         .frame(height: 300)
                 }
                 
-                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: 5)
+                ScoreView(numberOfAnswered: $numberOfAnswered, numberOfQuestions: questionsPerSession)
                 
                 if showAnswers {
                     Divider()
