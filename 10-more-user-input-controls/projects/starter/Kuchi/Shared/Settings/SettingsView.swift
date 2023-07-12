@@ -66,6 +66,16 @@ struct SettingsView: View {
             
             Section(header: Text("Notifications")) {
                 HStack {
+                    /* onChange가 추가(iOS14)되기 전 버전에서 사용
+                    Toggle("Daily Reminder", isOn:
+                            Binding(
+                                get: { dailyReminderEnabled },
+                                set: { newValue in
+                                    dailyReminderEnabled = newValue
+                                    configureNotification()
+                                })
+                    )*/
+                    
                     Toggle("Daily Reminder", isOn: $dailyReminderEnabled)
                     
                     DatePicker(
@@ -77,6 +87,22 @@ struct SettingsView: View {
                     .disabled(dailyReminderEnabled == false)
                 }
             }
+            .onChange(of: dailyReminderEnabled) { _ in
+                configureNotification()
+            }
+            .onChange(of: dailyReminderTime) { _ in
+                configureNotification()
+            }
+        }
+    }
+    
+    func configureNotification() {
+        if dailyReminderEnabled {
+            // 현재 선택한 시간으로 새 미리 알림을 만든다.
+            LocalNotifications.shared.createReminder(time: dailyReminderTime)
+        } else {
+            // 미리 알림 삭제
+            LocalNotifications.shared.deleteReminder()
         }
     }
 }
