@@ -32,6 +32,9 @@
 
 import SwiftUI
 
+// UserDefault에 저장되는 데이터는 Int, Double, String, Bool, Data, URL 등 기본 데이터 유형과 복합 유형 그리고 RawRepresentable를 채택하는 타입만 저장할 수 있다.
+// enum에서 원시값타입을 지정하면 자동으로 RawRepresentable이 채택된다.
+
 enum Appearance: Int, CaseIterable, Identifiable {
     
     case light, dark, automatic

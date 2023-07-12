@@ -43,7 +43,7 @@ struct SettingsView: View {
     
     @State var cardBackgroundColor: Color = .red
     
-    @State var appearance: Appearance = .automatic
+    @AppStorage("appearance") var appearance: Appearance = .automatic
 
     var body: some View {
         List {
