@@ -36,6 +36,9 @@ struct SettingsView: View {
     
     @State var numberOfQuestions = 6
     @State var learningEnabled: Bool = true
+    
+    @State var dailyReminderEnabled = false
+    @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
 
     var body: some View {
         List {
@@ -62,6 +65,17 @@ struct SettingsView: View {
             }
             
             Section(header: Text("Notifications")) {
+                HStack {
+                    Toggle("Daily Reminder", isOn: $dailyReminderEnabled)
+                    
+                    DatePicker(
+                      "",
+                      selection: $dailyReminderTime,
+                      displayedComponents: [.hourAndMinute] // 디폴트는 [.date, .hourAndMinute]
+                    )
+                    .datePickerStyle(.compact) // 디폴트가 compact. wheel, graphical 두가지 더 있음. wheel이 UIKit이랑 동일
+                    .disabled(dailyReminderEnabled == false)
+                }
             }
         }
     }
