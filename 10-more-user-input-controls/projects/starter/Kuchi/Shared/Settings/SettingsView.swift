@@ -39,6 +39,8 @@ struct SettingsView: View {
     
     @State var dailyReminderEnabled = false
     @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
+    
+    @State var cardBackgroundColor: Color = .red
 
     var body: some View {
         List {
@@ -47,6 +49,11 @@ struct SettingsView: View {
                 .padding(.bottom, 8)
             
             Section(header: Text("Appearance")) {
+                ColorPicker(
+                    "Card Background Color",
+                    selection: $cardBackgroundColor,
+                    supportsOpacity: true   // 불투명도를 지원하는지. 기본값 true
+                )
             }
                         
             Section(header: Text("Game")) {
