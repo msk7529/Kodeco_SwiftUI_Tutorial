@@ -35,18 +35,11 @@ import SwiftUI
 struct WelcomeView: View {
     
     @EnvironmentObject var userManager: UserManager
-    @EnvironmentObject var challengesViewModel: ChallengesViewModel
     @State var showPractice = false
     
     var body: some View {
         if showPractice {
-            PracticeView(
-                challengeTest: $challengesViewModel.currentChallenge,
-                userName: $userManager.profile.name,
-                numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)   // getter property를 @Binding 으로 넘기고자 할 때 사용
-            )
-            .environment(\.questionsPerSession, challengesViewModel.numberOfQuestions)
-            // .environment(\.verticalSizeClass, .compact) // 해당 뷰의 방향을 고정
+            HomeView()
         } else {
             ZStack {
                 WelcomeBackgroundImage()
