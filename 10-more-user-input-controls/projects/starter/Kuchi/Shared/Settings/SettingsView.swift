@@ -41,6 +41,8 @@ struct SettingsView: View {
     @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
     
     @State var cardBackgroundColor: Color = .red
+    
+    @State var appearance: Appearance = .automatic
 
     var body: some View {
         List {
@@ -49,11 +51,20 @@ struct SettingsView: View {
                 .padding(.bottom, 8)
             
             Section(header: Text("Appearance")) {
-                ColorPicker(
-                    "Card Background Color",
-                    selection: $cardBackgroundColor,
-                    supportsOpacity: true   // 불투명도를 지원하는지. 기본값 true
-                )
+                VStack(alignment: .leading) {
+                    Picker("", selection: $appearance) {
+                        Text(Appearance.light.name).tag(Appearance.light)
+                        Text(Appearance.dark.name).tag(Appearance.dark)
+                        Text(Appearance.automatic.name).tag(Appearance.automatic)
+                    }
+                    .pickerStyle(.segmented)    // 디폴트 스타일은 automatic
+                    
+                    ColorPicker(
+                        "Card Background Color",
+                        selection: $cardBackgroundColor,
+                        supportsOpacity: true  // 불투명도를 지원하는지. 기본값 true
+                    )
+                }
             }
                         
             Section(header: Text("Game")) {
