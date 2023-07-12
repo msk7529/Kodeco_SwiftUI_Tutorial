@@ -86,7 +86,9 @@ class ChallengesViewModel: ObservableObject {
     var wrongAnswers: [Challenge] = []
     
     var numberOfAnswered: Int { return correctAnswers.count }
-    private(set) var numberOfQuestions = 6
+    
+    @AppStorage("numberOfQuestions")
+    var numberOfQuestions = 6
     
     @Published var currentChallenge: ChallengeTest?
     

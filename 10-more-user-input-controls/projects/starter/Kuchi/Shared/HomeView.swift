@@ -53,7 +53,7 @@ struct HomeView: View {
                 }
             })
             .tag(1)     // 해당 탭의 인덱스
-            .environment(\.questionsPerSession, challengesViewModel.numberOfQuestions)
+            // .environment(\.questionsPerSession, challengesViewModel.numberOfQuestions)
             // .environment(\.verticalSizeClass, .compact) // 해당 뷰의 방향을 고정
             
             SettingsView()
