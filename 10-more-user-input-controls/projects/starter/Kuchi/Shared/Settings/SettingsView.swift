@@ -38,12 +38,13 @@ struct SettingsView: View {
     
     @State var learningEnabled: Bool = true
     
-    @State var dailyReminderEnabled = false
     @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
     
     @State var cardBackgroundColor: Color = .red
     
     @AppStorage("appearance") var appearance: Appearance = .automatic
+    @AppStorage("dailyReminderEnabled") var dailyReminderEnabled = false
+    @AppStorage("dailyReminderTime") var dailyReminderTimeShadow: Double = 0
 
     var body: some View {
         List {
@@ -113,8 +114,12 @@ struct SettingsView: View {
             .onChange(of: dailyReminderEnabled) { _ in
                 configureNotification()
             }
-            .onChange(of: dailyReminderTime) { _ in
+            .onChange(of: dailyReminderTime) { newValue in
+                dailyReminderTimeShadow = newValue.timeIntervalSince1970
                 configureNotification()
+            }
+            .onAppear {
+                dailyReminderTime = Date(timeIntervalSince1970: dailyReminderTimeShadow)
             }
         }
     }
