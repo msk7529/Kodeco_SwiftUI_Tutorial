@@ -53,9 +53,13 @@ struct SettingsView: View {
             Section(header: Text("Appearance")) {
                 VStack(alignment: .leading) {
                     Picker("", selection: $appearance) {
+                        ForEach(Appearance.allCases) { appearance in
+                            Text(appearance.name).tag(appearance)
+                        }
+                        /* ForEach로 대체 가능
                         Text(Appearance.light.name).tag(Appearance.light)
                         Text(Appearance.dark.name).tag(Appearance.dark)
-                        Text(Appearance.automatic.name).tag(Appearance.automatic)
+                        Text(Appearance.automatic.name).tag(Appearance.automatic) */
                     }
                     .pickerStyle(.segmented)    // 디폴트 스타일은 automatic
                     
