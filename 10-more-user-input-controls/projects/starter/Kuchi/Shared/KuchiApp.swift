@@ -38,6 +38,8 @@ struct KuchiApp: App {
     let userManager = UserManager()
     let challengesViewModel = ChallengesViewModel()
     
+    @AppStorage("appearance") var appearance: Appearance = .automatic
+    
     init() {
         userManager.load()
     }
@@ -47,6 +49,7 @@ struct KuchiApp: App {
             StarterView()
                 .environmentObject(userManager)
                 .environmentObject(challengesViewModel)
+                .preferredColorScheme(appearance.getColorScheme())
         }
     }
 }
