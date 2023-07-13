@@ -39,6 +39,8 @@ struct CardView: View {
     @State var revealed = false
     @State var offset: CGSize = .zero
     
+    @GestureState var isLongPressed = false     // 드래그 동작의 상태 저장
+    
     typealias CardDrag = (_ card: FlashCard, _ direction: DiscardedDirection) -> Void
 
     let dragged: CardDrag
@@ -53,6 +55,13 @@ struct CardView: View {
     
     var body: some View {
         
+        let tap = TapGesture()
+            .onEnded {
+                withAnimation(.easeIn, {
+                    revealed.toggle()
+                })
+            }
+        
         let drag = DragGesture()
             .onChanged { offset = $0.translation }
             .onEnded {
@@ -66,6 +75,13 @@ struct CardView: View {
                     offset = .zero
                 }
             }
+            .simultaneously(with: tap)
+        
+        let longPress = LongPressGesture()
+            .updating($isLongPressed) { value, state, transition in
+                state = value
+            }
+            .simultaneously(with: drag)     // 탭, 드래그, 롱프레스 제스처 동시사용
         
         return ZStack {
             Rectangle()
@@ -92,14 +108,13 @@ struct CardView: View {
         .shadow(radius: 8)
         .frame(width: 320, height: 210)
         .animation(.spring(), value: offset)
-        .gesture(TapGesture()
-            .onEnded {
-                withAnimation(.easeIn, {
-                    revealed.toggle()
-                })
-            })
         .offset(offset)
-        .gesture(drag)
+        .gesture(longPress)
+        .scaleEffect(isLongPressed ? 1.1 : 1)
+        .animation(
+            .easeInOut(duration: 0.3),
+            value: isLongPressed
+        )
     }
 }
 
