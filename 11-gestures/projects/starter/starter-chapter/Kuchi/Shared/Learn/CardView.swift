@@ -36,6 +36,8 @@ struct CardView: View {
     
     @Binding var cardColor: Color
     
+    @State var revealed = false
+    
     let flashCard: FlashCard
     
     init(_ card: FlashCard, cardColor: Binding<Color>) {
@@ -57,9 +59,11 @@ struct CardView: View {
                     .font(.largeTitle)
                     .foregroundColor(.white)
                 
-                Text(flashCard.card.answer)
-                    .font(.caption)
-                    .foregroundColor(.white)
+                if revealed {
+                    Text(flashCard.card.answer)
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
                 
                 Spacer()
             }
@@ -67,6 +71,12 @@ struct CardView: View {
         .shadow(radius: 8)
         .frame(width: 320, height: 210)
         .animation(.spring(), value: 0)
+        .gesture(TapGesture()
+            .onEnded {
+                withAnimation(.easeIn, {
+                    revealed.toggle()
+                })
+            })
     }
 }
 
