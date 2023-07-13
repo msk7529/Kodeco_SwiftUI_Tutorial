@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,23 +33,23 @@
 import struct SwiftUI.Color
 
 extension Color {
-  init(rgba: Int) {
-    self.init(
-      .sRGB,
-      red: Double((rgba & 0xFF000000) >> 24) / 255,
-      green: Double((rgba & 0x00FF0000) >> 16) / 255,
-      blue: Double((rgba & 0x0000FF00) >> 8) / 255,
-      opacity: Double((rgba & 0x000000FF)) / 255
-    )
-  }
-  
-  var asRgba: Int {
-    let components = cgColor!.components!
-    let (r, g, b, a) = (components[0], components[1], components[2], components[3])
-    return
-      (Int(a * 255) << 0) +
-      (Int(b * 255) << 8) +
-      (Int(g * 255) << 16) +
-      (Int(r * 255) << 24)
-  }
+    init(rgba: Int) {
+        self.init(
+            .sRGB,
+            red: Double((rgba & 0xFF000000) >> 24) / 255,
+            green: Double((rgba & 0x00FF0000) >> 16) / 255,
+            blue: Double((rgba & 0x0000FF00) >> 8) / 255,
+            opacity: Double((rgba & 0x000000FF)) / 255
+        )
+    }
+    
+    var asRgba: Int {
+        let components = cgColor!.components!
+        let (r, g, b, a) = (components[0], components[1], components[2], components[3])
+        return
+        (Int(a * 255) << 0) +
+        (Int(b * 255) << 8) +
+        (Int(g * 255) << 16) +
+        (Int(r * 255) << 24)
+    }
 }

@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -34,27 +34,33 @@ import SwiftUI
 
 @main
 struct KuchiApp: App {
-  let userManager = UserManager()
-  @AppStorage("appearance") var appearance: Appearance = .automatic
-  
-  init() {
-    userManager.load()
-  }
-
-  var body: some Scene {
-    WindowGroup {
-      StarterView()
-        .environmentObject(userManager)
-        .environmentObject(ChallengesViewModel())
-        .preferredColorScheme(appearance.getColorScheme())
+    
+    let userManager = UserManager()
+    let challengesViewModel = ChallengesViewModel()
+    
+    @AppStorage("appearance") var appearance: Appearance = .automatic
+    
+    init() {
+        userManager.load()
     }
-  }
+    
+    var body: some Scene {
+        WindowGroup {
+            StarterView()
+                .environmentObject(userManager)
+                .environmentObject(challengesViewModel)
+                .preferredColorScheme(appearance.getColorScheme())
+        }
+    }
 }
 
 struct KuchiApp_Previews: PreviewProvider {
-  static let userManager = UserManager(name: "Ray")
-  static var previews: some View {
-    StarterView()
-      .environmentObject(userManager)
-  }
+    static let userManager = UserManager(name: "Ray")
+    static let challengesViewModel = ChallengesViewModel()
+    
+    static var previews: some View {
+        StarterView()
+            .environmentObject(userManager)
+            .environmentObject(challengesViewModel)
+    }
 }

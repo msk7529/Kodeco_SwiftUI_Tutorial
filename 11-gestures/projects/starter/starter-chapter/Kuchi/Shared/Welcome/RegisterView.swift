@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,83 +33,103 @@
 import SwiftUI
 
 struct RegisterView: View {
-  @EnvironmentObject var userManager: UserManager
-  @FocusState var nameFieldFocused: Bool
-
-  var body: some View {
-    VStack {
-      Spacer()
-
-      WelcomeMessageView()
-
-      TextField("Type your name...", text: $userManager.profile.name)
-        .focused($nameFieldFocused)
-        .submitLabel(.done)
-        .onSubmit(registerUser)
-        .bordered()
-
-      HStack {
-        Spacer()
-        Text("\(userManager.profile.name.count)")
-          .font(.caption)
-          .foregroundColor(
-            userManager.isUserNameValid() ? .green : .red)
-          .padding(.trailing)
-      }
-      .padding(.bottom)
-
-      HStack {
-        Spacer()
-
-        Toggle(isOn: $userManager.settings.rememberUser) {
-          Text("Remember me")
-            .font(.subheadline)
-            .foregroundColor(.gray)
+    
+    @FocusState var nameFieldFocused: Bool
+    @EnvironmentObject var userManager: UserManager
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            WelcomeMessageView()
+            
+            /* 커스텀 뷰를 통한 커스터마이징
+            TextField("Type your name...", text: $name)
+                .textFieldStyle(KuchiTextStyle()) */
+            
+            TextField("Type your name...", text: $userManager.profile.name)
+                .focused($nameFieldFocused)
+                .submitLabel(.done)     // 키보드 return 버튼을 done으로 변경
+                .onSubmit(registerUser)
+                .bordered()     // ViewModifier을 이용한 커스터마이징
+            
+            HStack {
+                Spacer()    // Text를 오른쪽으로 밀기 위해 사용
+                
+                Text("\(userManager.profile.name.count)")
+                    .font(.caption)
+                    .foregroundColor(userManager.isUserNameValid() ? .green : .red)
+                    .padding(.trailing)
+            }
+            .padding(.bottom)   // 아래 요소와 간격을 띄우기 위함
+            
+            HStack {
+                Spacer()
+                
+                Toggle(isOn: $userManager.settings.rememberUser) {
+                    Text("Remember me")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .fixedSize()    // 이게 없으면 Toggle이 수평으로 확장됨
+            }
+            
+            Button(action: registerUser) {
+                HStack {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .frame(width: 16, height: 16, alignment: .center)
+                    Text("OK")
+                        .font(.body)
+                        .bold()
+                }
+                .bordered()
+            }
+            .disabled(!userManager.isUserNameValid())
+            
+            Spacer()
         }
-        .fixedSize()
-      }
-
-      Button(action: self.registerUser) {
-        HStack {
-          Image(systemName: "checkmark")
-            .resizable()
-            .frame(width: 16, height: 16, alignment: .center)
-          Text("OK")
-            .font(.body)
-            .bold()
-        }
-      }
-      .bordered()
-      .disabled(!userManager.isUserNameValid())
-
-      Spacer()
+        .padding()  // 텍스트필드 좌우 패딩을 주기 위함
+        .background(WelcomeBackgroundImage())
     }
-    .padding()
-    .background(WelcomeBackgroundImage())
-  }
 }
 
-// MARK: - Event Handlers
 extension RegisterView {
-  func registerUser() {
-    nameFieldFocused = false
-
-    if userManager.settings.rememberUser {
-      userManager.persistProfile()
-    } else {
-      userManager.clear()
+    
+    func registerUser() {
+        nameFieldFocused = false
+        
+        if userManager.settings.rememberUser {
+            userManager.persistProfile()
+        } else {
+            userManager.clear()
+        }
+        
+        userManager.persistSettings()
+        userManager.setRegistered()
     }
+}
 
-    userManager.persistSettings()
-    userManager.setRegistered()
-  }
+struct KuchiTextStyle: TextFieldStyle {
+    
+    public func _body(configuration: TextField<Self._Label>) -> some View {
+        return configuration
+            .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))   // 텍스트필드 내에 상하좌우 인셋 적용
+            .background(.white)
+            .overlay(RoundedRectangle(cornerRadius: 8)
+                .stroke(lineWidth: 2)   // 스트로크 효과를 추가하여 테두리만 유지하고 뒷 내용은 보이게 한다.
+                .foregroundColor(.blue)
+            )
+            .shadow(color: .gray.opacity(0.4), radius: 3, x: 1, y: 2)
+    }
 }
 
 struct RegisterView_Previews: PreviewProvider {
-  static let user = UserManager(name: "Ray")
-
-  static var previews: some View {
-    RegisterView()
-      .environmentObject(user)
-  }
+    
+    static let user = UserManager(name: "Ray")
+    
+    static var previews: some View {
+        RegisterView()
+            .environmentObject(user)    // UserManager 주입
+    }
 }

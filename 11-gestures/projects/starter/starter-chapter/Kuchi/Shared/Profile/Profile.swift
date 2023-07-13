@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,18 +32,19 @@
 
 /// Profile of the learner using the app.
 struct Profile: Codable {
-  /// (Selected) name of the learner.
-  var name: String
-  
-  /// Initializes a new `Profile` with an empty `name`.
-  init() {
-    name = ""
-  }
-  
-  /// Initializes a new `Profile` with a specified name.
-  ///  - Parameters:
-  ///     - name Name of the user profile.
-  init(named name: String) {
-    self.name = name
-  }
+    
+    /// (Selected) name of the learner.
+    var name: String
+    
+    /// Initializes a new `Profile` with an empty `name`.
+    init() {
+        self.name = ""
+    }
+    
+    /// Initializes a new `Profile` with a specified name.
+    ///  - Parameters:
+    ///     - name Name of the user profile.
+    init(named name: String) {
+        self.name = name
+    }
 }

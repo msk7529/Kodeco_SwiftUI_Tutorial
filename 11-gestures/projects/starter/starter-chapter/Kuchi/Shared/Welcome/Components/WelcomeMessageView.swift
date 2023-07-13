@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,28 +33,30 @@
 import SwiftUI
 
 struct WelcomeMessageView: View {
-  var body: some View {
-    Label {
-      VStack(alignment: .leading) {
-        Text("Welcome to")
-          .font(.headline)
-          .bold()
-        Text("Kuchi")
-          .font(.largeTitle)
-          .bold()
-      }
-      .foregroundColor(.red)
-      .lineLimit(1)
-      .padding(.horizontal)
-    } icon: {
-      LogoImage()
+    
+    var body: some View {
+        Label {
+            VStack(alignment: .leading) {
+                Text("Welcome to")
+                    .font(.headline)
+                    .bold()
+                Text("Kuchi")
+                    .font(.largeTitle)
+                    .bold()
+            }
+            .foregroundColor(.red)
+            .lineLimit(2)
+            .multilineTextAlignment(.leading)
+            .padding(.horizontal)
+        } icon: {
+            LogoImage()
+        }
+        .labelStyle(HorizontallyAlignedLabelStyle())    // icon과 Text를 중앙정렬하기 위함
     }
-    .labelStyle(HorizontallyAlignedLabelStyle())
-  }
 }
 
 struct WelcomeMessageView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeMessageView()
-  }
+    static var previews: some View {
+        WelcomeMessageView()
+    }
 }

@@ -1,15 +1,15 @@
-/// Copyright (c) 2021 Razeware LLC
-/// 
+/// Copyright (c) 2023 Kodeco Inc.
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -33,78 +33,111 @@
 import SwiftUI
 
 struct SettingsView: View {
-  @AppStorage("numberOfQuestions") var numberOfQuestions = 6
-  @AppStorage("appearance") var appearance: Appearance = .automatic
-  @State var learningEnabled: Bool = true
-  @AppStorage("dailyReminderEnabled") var dailyReminderEnabled = false
-  @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
-  @AppStorage("dailyReminderTime") var dailyReminderTimeShadow: Double = 0
-  @State var cardBackgroundColor: Color = .red
 
-  var body: some View {
-    List {
-      Text("Settings")
-        .font(.largeTitle)
-        .padding(.bottom, 8)
-      
-      Section(header: Text("Appearance")) {
-        VStack(alignment: .leading) {
-          Picker("", selection: $appearance) {
-            ForEach(Appearance.allCases) { appearance in
-              Text(appearance.name).tag(appearance)
-            }          }
-          .pickerStyle(SegmentedPickerStyle())
-          
-          ColorPicker(
-            "Card Background Color",
-            selection: $cardBackgroundColor
-          )
+    @EnvironmentObject var challengesViewModel: ChallengesViewModel
+    
+    @State var learningEnabled: Bool = true
+    
+    @State var dailyReminderTime = Date(timeIntervalSince1970: 0)
+    
+    @State var cardBackgroundColor: Color = .red
+    
+    @AppStorage("appearance") var appearance: Appearance = .automatic
+    @AppStorage("dailyReminderEnabled") var dailyReminderEnabled = false
+    @AppStorage("dailyReminderTime") var dailyReminderTimeShadow: Double = 0
+
+    var body: some View {
+        List {
+            Text("Settings")
+                .font(.largeTitle)
+                .padding(.bottom, 8)
+            
+            Section(header: Text("Appearance")) {
+                VStack(alignment: .leading) {
+                    Picker("", selection: $appearance) {
+                        ForEach(Appearance.allCases) { appearance in
+                            Text(appearance.name).tag(appearance)
+                        }
+                        /* ForEach로 대체 가능
+                        Text(Appearance.light.name).tag(Appearance.light)
+                        Text(Appearance.dark.name).tag(Appearance.dark)
+                        Text(Appearance.automatic.name).tag(Appearance.automatic) */
+                    }
+                    .pickerStyle(.segmented)    // 디폴트 스타일은 automatic
+                    
+                    ColorPicker(
+                        "Card Background Color",
+                        selection: $cardBackgroundColor,
+                        supportsOpacity: true  // 불투명도를 지원하는지. 기본값 true
+                    )
+                }
+            }
+                        
+            Section(header: Text("Game")) {
+                VStack(alignment: .leading) {
+                    Stepper(
+                        "Number of Questions: \(challengesViewModel.numberOfQuestions)",
+                        value: $challengesViewModel.numberOfQuestions,
+                        in: 3 ... 20
+                    )
+                    Text("Any change will affect the next game")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+                
+                Toggle("Learning Enabled", isOn: $learningEnabled)
+            }
+            
+            Section(header: Text("Notifications")) {
+                HStack {
+                    /* onChange가 추가(iOS14)되기 전 버전에서 사용
+                    Toggle("Daily Reminder", isOn:
+                            Binding(
+                                get: { dailyReminderEnabled },
+                                set: { newValue in
+                                    dailyReminderEnabled = newValue
+                                    configureNotification()
+                                })
+                    )*/
+                    
+                    Toggle("Daily Reminder", isOn: $dailyReminderEnabled)
+                    
+                    DatePicker(
+                      "",
+                      selection: $dailyReminderTime,
+                      displayedComponents: [.hourAndMinute] // 디폴트는 [.date, .hourAndMinute]
+                    )
+                    .datePickerStyle(.compact) // 디폴트가 compact. wheel, graphical 두가지 더 있음. wheel이 UIKit이랑 동일
+                    .disabled(dailyReminderEnabled == false)
+                }
+            }
+            .onChange(of: dailyReminderEnabled) { _ in
+                configureNotification()
+            }
+            .onChange(of: dailyReminderTime) { newValue in
+                dailyReminderTimeShadow = newValue.timeIntervalSince1970
+                configureNotification()
+            }
+            .onAppear {
+                dailyReminderTime = Date(timeIntervalSince1970: dailyReminderTimeShadow)
+            }
         }
-      }
-      
-      Section(header: Text("Game")) {
-        VStack(alignment: .leading) {
-          Stepper(
-            "Number of Questions: \(numberOfQuestions)",
-            value: $numberOfQuestions,
-            in: 3 ... 20
-          )
-          Text("Any change will affect the next game")
-            .font(.caption2)
-            .foregroundColor(.secondary)
-        }
-        
-        Toggle("Learning Enabled", isOn: $learningEnabled)
-      }
-      
-      Section(header: Text("Notifications")) {
-        HStack {
-          Toggle("Daily Reminder", isOn: $dailyReminderEnabled)
-          DatePicker("", selection: $dailyReminderTime, displayedComponents: .hourAndMinute)
-        }
-      }
-      .onChange(of: dailyReminderEnabled, perform: { _ in configureNotification() })
-      .onChange(of: dailyReminderTime, perform: { newValue in
-        dailyReminderTimeShadow = newValue.timeIntervalSince1970
-        configureNotification()
-      })
-      .onAppear {
-        dailyReminderTime = Date(timeIntervalSince1970: dailyReminderTimeShadow)
-      }
     }
-  }
-  
-  func configureNotification() {
-    if dailyReminderEnabled {
-      LocalNotifications.shared.createReminder(time: dailyReminderTime)
-    } else {
-      LocalNotifications.shared.deleteReminder()
+    
+    func configureNotification() {
+        if dailyReminderEnabled {
+            // 현재 선택한 시간으로 새 미리 알림을 만든다.
+            LocalNotifications.shared.createReminder(time: dailyReminderTime)
+        } else {
+            // 미리 알림 삭제
+            LocalNotifications.shared.deleteReminder()
+        }
     }
-  }
 }
 
 struct SettingsView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsView()
-  }
+    static var previews: some View {
+        SettingsView()
+            .environmentObject(ChallengesViewModel())
+    }
 }

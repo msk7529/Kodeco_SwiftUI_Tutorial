@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,39 +33,39 @@
 import SwiftUI
 
 struct WelcomeView: View {
-  @EnvironmentObject var userManager: UserManager
-  @State var showPractice = false
-  
-  @ViewBuilder
-  var body: some View {
-    if showPractice {
-      HomeView()
-    } else {
-      ZStack {
-        WelcomeBackgroundImage()
-        
-        VStack {
-          Text(verbatim: "Hi, \(userManager.profile.name)")
-          
-          WelcomeMessageView()
-          
-          Button {
-            showPractice = true
-          } label: {
-            HStack {
-              Image(systemName: "play")
-              Text(verbatim: "Start")
+    
+    @EnvironmentObject var userManager: UserManager
+    @State var showPractice = false
+    
+    var body: some View {
+        if showPractice {
+            HomeView()
+        } else {
+            ZStack {
+                WelcomeBackgroundImage()
+                
+                VStack {
+                    Text(verbatim: "Hi, \(userManager.profile.name)")
+                    
+                    WelcomeMessageView()
+                    
+                    Button {
+                        showPractice = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "play")
+                            Text(verbatim: "Start")
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }
 
 struct WelcomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeView()
-      .environmentObject(UserManager())
-  }
+    static var previews: some View {
+        WelcomeView()
+            .environmentObject(UserManager())
+    }
 }

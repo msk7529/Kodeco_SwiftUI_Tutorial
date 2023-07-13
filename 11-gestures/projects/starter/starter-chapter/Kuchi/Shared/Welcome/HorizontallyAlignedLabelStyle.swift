@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +33,12 @@
 import SwiftUI
 
 struct HorizontallyAlignedLabelStyle: LabelStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    HStack {
-      configuration.icon
-      configuration.title
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            // HStack은 기본적으로 모든 자식을 중앙 정렬함
+            configuration.icon
+            configuration.title
+        }
     }
-  }
 }

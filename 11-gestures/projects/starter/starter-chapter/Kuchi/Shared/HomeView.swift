@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,42 +33,46 @@
 import SwiftUI
 
 struct HomeView: View {
-  @State var selectedTab = 0
-  @EnvironmentObject var userManager: UserManager
-  @EnvironmentObject var challengesViewModel: ChallengesViewModel
-
-  var body: some View {
-    TabView(selection: $selectedTab) {
-      PracticeView(
-        challengeTest: $challengesViewModel.currentChallenge,
-        userName: $userManager.profile.name,
-        numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)
-      )
-        .tabItem({
-          VStack {
-            Image(systemName: "rectangle.dock")
-            Text("Challenge")
-          }
-        })
-        .tag(1)
-
-      SettingsView()
-        .tabItem({
-          VStack {
-            Image(systemName: "gear")
-            Text("Settings")
-          }
-        })
-        .tag(2)
+    
+    @EnvironmentObject var userManager: UserManager
+    @EnvironmentObject var challengesViewModel: ChallengesViewModel
+    
+    @State var selectedTab = 0
+    
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            PracticeView(
+                challengeTest: $challengesViewModel.currentChallenge,
+                userName: $userManager.profile.name,
+                numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)   // getter property를 @Binding 으로 넘기고자 할 때 사용
+            )
+            .tabItem({
+                VStack {
+                    Image(systemName: "rectangle.dock")
+                    Text("Challenge")
+                }
+            })
+            .tag(1)     // 해당 탭의 인덱스
+            // .environment(\.questionsPerSession, challengesViewModel.numberOfQuestions)
+            // .environment(\.verticalSizeClass, .compact) // 해당 뷰의 방향을 고정
+            
+            SettingsView()
+                .tabItem({
+                    VStack {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
+                })
+                .tag(2)     // 해당 탭의 인덱스
+        }
+        .accentColor(.orange)   // 탭 선택시 아이콘, 텍스트 컬러
     }
-    .accentColor(.orange)
-  }
 }
 
 struct HomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    HomeView()
-      .environmentObject(UserManager())
-      .environmentObject(ChallengesViewModel())
-  }
+    static var previews: some View {
+        HomeView()
+            .environmentObject(UserManager())
+            .environmentObject(ChallengesViewModel())
+    }
 }

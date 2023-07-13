@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,25 +32,29 @@
 
 import SwiftUI
 
+// UserDefault에 저장되는 데이터는 Int, Double, String, Bool, Data, URL 등 기본 데이터 유형과 복합 유형 그리고 RawRepresentable를 채택하는 타입만 저장할 수 있다.
+// enum에서 원시값타입을 지정하면 자동으로 RawRepresentable이 채택된다.
+
 enum Appearance: Int, CaseIterable, Identifiable {
-  case light, dark, automatic
-
-  var id: Int { self.rawValue }
-
-  var name: String {
-    switch self {
-    case .light: return "Light"
-    case .dark: return "Dark"
-    case .automatic: return "Automatic"
+    
+    case light, dark, automatic
+    
+    var id: Int { self.rawValue }
+    
+    var name: String {
+        switch self {
+        case .light: return "Light"
+        case .dark: return "Dark"
+        case .automatic: return "Automatic"
+        }
     }
-  }
-  
-  func getColorScheme() -> ColorScheme? {
-    switch self {
-    case .automatic: return nil
-    case .light: return .light
-    case .dark: return .dark
+    
+    func getColorScheme() -> ColorScheme? {
+        switch self {
+        case .automatic: return nil
+        case .light: return .light
+        case .dark: return .dark
+        }
     }
-  }
 }
 
