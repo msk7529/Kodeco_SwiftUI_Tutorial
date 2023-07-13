@@ -32,22 +32,17 @@
 
 import SwiftUI
 
-struct LearnView: View {
+struct DeckView: View {
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Swipe left if you remembered"
-                 + "\nSwipe right if you didn’t")
-            .font(.headline)
-            DeckView()
-            Spacer()
-            Text("Remembered 0/0")
+        ZStack {
+            CardView()
+            CardView()
         }
     }
 }
 
-struct LearnView_Previews: PreviewProvider {
+struct DeckView_Previews: PreviewProvider {
     static var previews: some View {
-        LearnView()
+        DeckView()
     }
 }

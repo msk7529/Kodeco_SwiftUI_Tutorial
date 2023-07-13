@@ -70,6 +70,7 @@
 		C7B5B4642A6061FC00B00F2A /* FlashDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5B4632A6061FC00B00F2A /* FlashDeck.swift */; };
 		C7B5B4662A6062E600B00F2A /* LearningStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5B4652A6062E600B00F2A /* LearningStore.swift */; };
 		C7B5B4682A60640E00B00F2A /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5B4672A60640E00B00F2A /* CardView.swift */; };
+		C7B5B46A2A6064B200B00F2A /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5B4692A6064B200B00F2A /* DeckView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		C7B5B4632A6061FC00B00F2A /* FlashDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashDeck.swift; sourceTree = "<group>"; };
 		C7B5B4652A6062E600B00F2A /* LearningStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningStore.swift; sourceTree = "<group>"; };
 		C7B5B4672A60640E00B00F2A /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		C7B5B4692A6064B200B00F2A /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				C7B5B45F2A6060E800B00F2A /* LearnView.swift */,
+				C7B5B4692A6064B200B00F2A /* DeckView.swift */,
 				C7B5B4672A60640E00B00F2A /* CardView.swift */,
 				C7B5B4612A60616000B00F2A /* FlashCard.swift */,
 				C7B5B4632A6061FC00B00F2A /* FlashDeck.swift */,
@@ -409,6 +412,7 @@
 				57211E8F26F69C9F00F99E16 /* HistoryView.swift in Sources */,
 				57211E8B26F69C9500F99E16 /* ChoicesRow.swift in Sources */,
 				57578FDE24E9D943003465A4 /* HomeView.swift in Sources */,
+				C7B5B46A2A6064B200B00F2A /* DeckView.swift in Sources */,
 				57B1E5BA26FB3252004C8862 /* Color+Extension.swift in Sources */,
 				C7B5B4622A60616000B00F2A /* FlashCard.swift in Sources */,
 				57B1E5C526FB38D5004C8862 /* SettingsView.swift in Sources */,
