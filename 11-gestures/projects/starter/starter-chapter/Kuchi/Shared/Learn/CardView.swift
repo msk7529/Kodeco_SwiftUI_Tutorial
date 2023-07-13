@@ -34,16 +34,19 @@ import SwiftUI
 
 struct CardView: View {
     
+    @Binding var cardColor: Color
+    
     let flashCard: FlashCard
     
-    init(_ card: FlashCard) {
-        self.flashCard = card
+    init(_ card: FlashCard, cardColor: Binding<Color>) {
+        flashCard = card
+        _cardColor = cardColor
     }
     
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.red)
+                .fill(cardColor)
                 .frame(width: 320, height: 210)
                 .cornerRadius(12)
             
@@ -68,6 +71,9 @@ struct CardView: View {
 }
 
 struct CardView_Previews: PreviewProvider {
+
+    @State static var cardColor = Color.red
+
     static var previews: some View {
         let card = FlashCard(
             card: Challenge(
@@ -76,6 +82,6 @@ struct CardView_Previews: PreviewProvider {
                 answer: "Hello"
             )
         )
-        return CardView(card)
+        return CardView(card, cardColor: $cardColor)
     }
 }

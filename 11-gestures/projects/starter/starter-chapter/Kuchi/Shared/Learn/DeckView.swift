@@ -34,6 +34,8 @@ import SwiftUI
 
 struct DeckView: View {
     
+    @AppStorage("cardBackgroundColor") var cardBackgroundColorInt: Int = 0xFF0000FF
+    
     @ObservedObject var deck: FlashDeck
     
     let onMemorized: () -> Void
@@ -64,7 +66,11 @@ struct DeckView: View {
     }
     
     func createCardView(for card: FlashCard) -> CardView {
-        CardView(card)
+        let view = CardView(card, cardColor: Binding(
+            get: { Color(rgba: cardBackgroundColorInt) },
+            set: { newValue in cardBackgroundColorInt = newValue.asRgba })
+        )
+        return view
     }
 }
 
