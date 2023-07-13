@@ -33,15 +33,25 @@
 import SwiftUI
 
 struct LearnView: View {
+    
+    @StateObject var learningStore = LearningStore(deck: ChallengesViewModel.challenges)    // @StateObject: learningStore의 Published property가 변경되면 뷰가 다시 그려진다.
+    
     var body: some View {
         VStack {
             Spacer()
+            
             Text("Swipe left if you remembered"
                  + "\nSwipe right if you didn’t")
             .font(.headline)
-            DeckView()
+            
+            DeckView(
+                deck: learningStore.deck,
+                onMemorized: { learningStore.score += 1 }
+            )
+            
             Spacer()
-            Text("Remembered 0/0")
+            
+            Text("Remembered \(learningStore.score)" + "/\(learningStore.deck.cards.count)")
         }
     }
 }

@@ -33,20 +33,31 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    let flashCard: FlashCard
+    
+    init(_ card: FlashCard) {
+        self.flashCard = card
+    }
+    
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(Color.red)
                 .frame(width: 320, height: 210)
                 .cornerRadius(12)
+            
             VStack {
                 Spacer()
-                Text("Apple")
+                
+                Text(flashCard.card.question)
                     .font(.largeTitle)
                     .foregroundColor(.white)
-                Text("Omena")
+                
+                Text(flashCard.card.answer)
                     .font(.caption)
                     .foregroundColor(.white)
+                
                 Spacer()
             }
         }
@@ -58,6 +69,13 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView()
+        let card = FlashCard(
+            card: Challenge(
+                question: "こんにちわ",
+                pronunciation: "Konnichiwa",
+                answer: "Hello"
+            )
+        )
+        return CardView(card)
     }
 }
