@@ -1,15 +1,15 @@
 /// Copyright (c) 2023 Kodeco Inc.
-///
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,11 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
+/// 
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,57 +28,35 @@
 
 import SwiftUI
 
-struct WelcomeView: View {
+struct WelcomeButtonView: View {
     
-    enum FlightViewId: CaseIterable {
-        case showFlightStatus
-    }
-    
-    struct ViewButton: Identifiable {
-        var id: FlightViewId
-        var title: String
-        var subtitle: String
-    }
-    
-    @StateObject var flightInfo = FlightData()
-    
-    @State private var selectedView: FlightViewId?
-    
-    var sidebarButtons: [ViewButton] {
-        var buttons: [ViewButton] = []
-        
-        buttons.append(
-            ViewButton(
-                id: .showFlightStatus,
-                title: "Flight Status",
-                subtitle: "Departure and arrival information"
-            )
-        )
-        
-        return buttons
-    }
+    var title: String
+    var subTitle: String
     
     var body: some View {
-        NavigationSplitView {
-            List(sidebarButtons, selection: $selectedView) { button in
-                VStack {
-                    WelcomeButtonView(
-                        title: button.title,
-                        subTitle: button.subtitle
-                    )
-                }
-            }
-            .listStyle(.plain)
-            .navigationTitle("Mountain Airport")
-        } detail: {
-            // 리스트 선택시 push 이동. iPad에서는 스플릿뷰에 노출
-            Text("Detail")
-        }
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.title)
+                .foregroundColor(.white)
+            Text(subTitle)
+                .font(.subheadline)
+                .foregroundColor(.white)
+        }.padding()
+            .frame(maxWidth: .infinity, alignment: .leading)    // VStack이 가로를 모두 채우도록 설정, 내부 콘텐츠의 정렬을 leading으로 설정
+            .background(
+                Image("link-pattern")
+                    .resizable()
+                    .clipped()
+            )
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct WelcomeButtonView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        WelcomeView()
+        WelcomeButtonView(
+            title: "Flight Status",
+            subTitle: "Departure and Arrival Information"
+        )
     }
 }
