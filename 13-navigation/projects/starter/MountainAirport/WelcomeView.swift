@@ -76,7 +76,14 @@ struct WelcomeView: View {
             .navigationTitle("Mountain Airport")
         } detail: {
             // 리스트 선택시 push 이동. iPad에서는 스플릿뷰에 노출
-            Text("Detail")
+            if let view = selectedView {
+                switch view {
+                case .showFlightStatus:
+                    FlightStatusBoard(flights: flightInfo.getDaysFlights(Date()))
+                }
+            } else {
+                Text("Select an option in the sidebar.")
+            }
         }
     }
 }

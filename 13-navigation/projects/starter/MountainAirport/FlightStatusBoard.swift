@@ -34,13 +34,29 @@ import SwiftUI
 
 struct FlightStatusBoard: View {
     
+    var flights: [FlightInformation]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List(flights, id: \.id) { flight in
+                NavigationLink(flight.statusBoardName, value: flight)   // 탐색 presentation을 제어하는 View
+            }
+            .navigationDestination(
+                //  Destination View를 NaviationLink에서 제시된 Data 타입과 연결해주는 메서드
+                // List에 여러타입이 들어있으면 navigationDestination을 여러개 쓰면 됨
+                for: FlightInformation.self,
+                destination: { flight in
+                    // 리스트 선택시 화면 이동
+                    FlightDetails(flight: flight)
+                }
+            )
+            .navigationTitle("Today's Flight Status")
+        }
     }
 }
 
 struct FlightStatusBoard_Previews: PreviewProvider {
     static var previews: some View {
-        FlightStatusBoard()
+        FlightStatusBoard(flights: FlightData.generateTestFlights(date: Date()))
     }
 }
