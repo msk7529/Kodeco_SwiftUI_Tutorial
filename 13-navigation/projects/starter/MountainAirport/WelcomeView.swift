@@ -34,12 +34,46 @@ import SwiftUI
 
 struct WelcomeView: View {
     
+    enum FlightViewId: CaseIterable {
+        case showFlightStatus
+    }
+    
+    struct ViewButton: Identifiable {
+        var id: FlightViewId
+        var title: String
+        var subtitle: String
+    }
+    
     @StateObject var flightInfo = FlightData()
+    
+    @State private var selectedView: FlightViewId?
+    
+    var sidebarButtons: [ViewButton] {
+        var buttons: [ViewButton] = []
+        
+        buttons.append(
+            ViewButton(
+                id: .showFlightStatus,
+                title: "Flight Status",
+                subtitle: "Departure and arrival information"
+            )
+        )
+        
+        return buttons
+    }
     
     var body: some View {
         NavigationSplitView {
-            Text("Sidebar")
+            List(sidebarButtons, selection: $selectedView) { button in
+                VStack {
+                    Text(button.title)
+                    Text(button.subtitle)
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("Mountain Airport")
         } detail: {
+            // 리스트 선택시 push 이동. iPad에서는 스플릿뷰에 노출
             Text("Detail")
         }
     }
