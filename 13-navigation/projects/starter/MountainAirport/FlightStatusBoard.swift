@@ -32,13 +32,8 @@
 
 import SwiftUI
 
-struct FlightStatusBoard: View {
+struct FlightList: View {
     
-    var shownFlights: [FlightInformation] {
-        hidePast ? flights.filter { $0.localTime >= Date() } : flights
-    }
-    
-    @State private var hidePast = false
     @State private var path: [FlightInformation] = []
     
     var flights: [FlightInformation]
@@ -46,21 +41,14 @@ struct FlightStatusBoard: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            List(shownFlights, id: \.id) { flight in
-                NavigationLink(flight.statusBoardName, value: flight)   // 탐색 presentation을 제어하는 View
+            List(flights, id: \.id) { flight in
+                NavigationLink(flight.statusBoardName, value: flight)
             }
             .navigationDestination(
-                //  Destination View를 NaviationLink에서 제시된 Data 타입과 연결해주는 메서드
-                // List에 여러타입이 들어있으면 navigationDestination을 여러개 쓰면 됨
                 for: FlightInformation.self,
                 destination: { flight in
-                    // 리스트 선택시 화면 이동
                     FlightDetails(flight: flight)
                 }
-            )
-            .navigationTitle("Today's Flight Status")
-            .navigationBarItems(
-                trailing: Toggle("Hide Past", isOn: $hidePast)
             )
         }
         .onAppear {
@@ -68,6 +56,50 @@ struct FlightStatusBoard: View {
                 path.append(flight)
             }
         }
+    }
+}
+
+struct FlightStatusBoard: View {
+    
+    var shownFlights: [FlightInformation] {
+        hidePast ? flights.filter { $0.localTime >= Date() } : flights
+    }
+    
+    @State private var hidePast = false
+    
+    var flights: [FlightInformation]
+    var flightToShow: FlightInformation?
+    
+    var body: some View {
+        TabView {
+            // 도착 항공편
+            FlightList(flights: shownFlights.filter { $0.direction == .arrival })
+            .tabItem {
+                // 4
+                Image("descending-airplane")
+                    .resizable()
+                Text("Arrivals")
+            }
+            
+            // 모든 항공편
+            FlightList(flights: shownFlights,flightToShow: flightToShow)
+            .tabItem {
+                Image(systemName: "airplane")
+                    .resizable()
+                Text("All")
+            }
+            
+            // 출발 항공편
+            FlightList(flights: shownFlights.filter { $0.direction == .departure })
+            .tabItem {
+                Image("ascending-airplane")
+                Text("Departures")
+            }
+        }
+        .navigationTitle("Today's Flight Status")
+        .navigationBarItems(
+            trailing: Toggle("Hide Past", isOn: $hidePast)
+        )
     }
 }
 
