@@ -65,6 +65,13 @@ struct FlightStatusBoard: View {
         hidePast ? flights.filter { $0.localTime >= Date() } : flights
     }
     
+    var shortDateString: String {
+        let dateF = DateFormatter()
+        dateF.timeStyle = .none
+        dateF.dateFormat = "MMM d"
+        return dateF.string(from: Date())
+    }
+    
     @AppStorage("FlightStatusCurrentTab") var selectedTab = 1
     
     @State private var hidePast = false
@@ -83,6 +90,7 @@ struct FlightStatusBoard: View {
                 Text("Arrivals")
             }
             .tag(0)
+            .badge(shownFlights.filter { $0.direction == .arrival }.count)
             
             // 모든 항공편
             FlightList(flights: shownFlights,flightToShow: flightToShow)
@@ -92,6 +100,7 @@ struct FlightStatusBoard: View {
                 Text("All")
             }
             .tag(1)
+            .badge(shortDateString)
             
             // 출발 항공편
             FlightList(flights: shownFlights.filter { $0.direction == .departure })
@@ -100,6 +109,7 @@ struct FlightStatusBoard: View {
                 Text("Departures")
             }
             .tag(2)
+            .badge(shownFlights.filter { $0.direction == .departure }.count)
         }
         .onAppear {
             if flightToShow != nil {
