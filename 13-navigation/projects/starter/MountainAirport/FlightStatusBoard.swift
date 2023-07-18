@@ -39,11 +39,13 @@ struct FlightStatusBoard: View {
     }
     
     @State private var hidePast = false
+    @State private var path: [FlightInformation] = []
     
     var flights: [FlightInformation]
+    var flightToShow: FlightInformation?
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List(shownFlights, id: \.id) { flight in
                 NavigationLink(flight.statusBoardName, value: flight)   // 탐색 presentation을 제어하는 View
             }
@@ -60,6 +62,11 @@ struct FlightStatusBoard: View {
             .navigationBarItems(
                 trailing: Toggle("Hide Past", isOn: $hidePast)
             )
+        }
+        .onAppear {
+            if let flight = flightToShow, !path.contains(flight) {
+                path.append(flight)
+            }
         }
     }
 }

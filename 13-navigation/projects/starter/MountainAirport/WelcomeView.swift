@@ -32,18 +32,18 @@
 
 import SwiftUI
 
+enum FlightViewId: CaseIterable {
+    case showFlightStatus
+    case showLastFlight
+}
+
+struct ViewButton: Identifiable {
+    var id: FlightViewId
+    var title: String
+    var subtitle: String
+}
+
 struct WelcomeView: View {
-    
-    enum FlightViewId: CaseIterable {
-        case showFlightStatus
-        case showLastFlight
-    }
-    
-    struct ViewButton: Identifiable {
-        var id: FlightViewId
-        var title: String
-        var subtitle: String
-    }
     
     @StateObject var flightInfo = FlightData()
     @StateObject var lastFlightInfo = FlightNavigationInfo()
@@ -94,7 +94,10 @@ struct WelcomeView: View {
                     FlightStatusBoard(flights: flightInfo.getDaysFlights(Date()))
                 case .showLastFlight:
                     if let flightId = lastFlightInfo.lastFlightId, let flight = flightInfo.getFlightById(flightId) {
-                        FlightDetails(flight: flight)
+                        FlightStatusBoard(
+                            flights: flightInfo.getDaysFlights(Date()),
+                            flightToShow: flight
+                        )
                     }
                 }
             } else {
