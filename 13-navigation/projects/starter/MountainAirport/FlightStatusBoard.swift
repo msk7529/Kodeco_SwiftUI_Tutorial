@@ -65,13 +65,15 @@ struct FlightStatusBoard: View {
         hidePast ? flights.filter { $0.localTime >= Date() } : flights
     }
     
+    @AppStorage("FlightStatusCurrentTab") var selectedTab = 1
+    
     @State private var hidePast = false
     
     var flights: [FlightInformation]
     var flightToShow: FlightInformation?
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             // 도착 항공편
             FlightList(flights: shownFlights.filter { $0.direction == .arrival })
             .tabItem {
@@ -80,6 +82,7 @@ struct FlightStatusBoard: View {
                     .resizable()
                 Text("Arrivals")
             }
+            .tag(0)
             
             // 모든 항공편
             FlightList(flights: shownFlights,flightToShow: flightToShow)
@@ -88,12 +91,19 @@ struct FlightStatusBoard: View {
                     .resizable()
                 Text("All")
             }
+            .tag(1)
             
             // 출발 항공편
             FlightList(flights: shownFlights.filter { $0.direction == .departure })
             .tabItem {
                 Image("ascending-airplane")
                 Text("Departures")
+            }
+            .tag(2)
+        }
+        .onAppear {
+            if flightToShow != nil {
+                selectedTab = 1
             }
         }
         .navigationTitle("Today's Flight Status")
