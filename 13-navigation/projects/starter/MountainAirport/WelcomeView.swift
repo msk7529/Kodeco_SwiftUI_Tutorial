@@ -43,6 +43,8 @@ struct ViewButton: Identifiable {
     var subtitle: String
 }
 
+// SwiftUI 4.0 네비게이션 관련 마이그레이션 가이드: https://developer.apple.com/documentation/swiftui/migrating-to-new-navigation-types
+
 struct WelcomeView: View {
     
     @StateObject var flightInfo = FlightData()
