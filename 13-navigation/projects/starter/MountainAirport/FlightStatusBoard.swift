@@ -34,11 +34,17 @@ import SwiftUI
 
 struct FlightStatusBoard: View {
     
+    var shownFlights: [FlightInformation] {
+        hidePast ? flights.filter { $0.localTime >= Date() } : flights
+    }
+    
+    @State private var hidePast = false
+    
     var flights: [FlightInformation]
     
     var body: some View {
         NavigationStack {
-            List(flights, id: \.id) { flight in
+            List(shownFlights, id: \.id) { flight in
                 NavigationLink(flight.statusBoardName, value: flight)   // 탐색 presentation을 제어하는 View
             }
             .navigationDestination(
@@ -51,12 +57,19 @@ struct FlightStatusBoard: View {
                 }
             )
             .navigationTitle("Today's Flight Status")
+            .navigationBarItems(
+                trailing: Toggle("Hide Past", isOn: $hidePast)
+            )
         }
     }
 }
 
 struct FlightStatusBoard_Previews: PreviewProvider {
     static var previews: some View {
-        FlightStatusBoard(flights: FlightData.generateTestFlights(date: Date()))
+        NavigationStack {
+            FlightStatusBoard(
+                flights: FlightData.generateTestFlights(date: Date())
+            )
+        }
     }
 }
