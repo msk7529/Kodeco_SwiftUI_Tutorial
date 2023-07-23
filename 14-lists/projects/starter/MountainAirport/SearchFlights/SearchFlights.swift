@@ -30,15 +30,6 @@ import SwiftUI
 
 struct SearchFlights: View {
     
-    struct HierarchicalFlightRow: Identifiable {
-        
-        var label: String
-        var flight: FlightInformation?
-        var children: [HierarchicalFlightRow]?
-        
-        var id = UUID()
-    }
-    
     var matchingFlights: [FlightInformation] {
         var matchingFlights = flightData
         
@@ -55,21 +46,6 @@ struct SearchFlights: View {
         }
         
         return matchingFlights
-    }
-    
-    var hierarchicalFlights: [HierarchicalFlightRow] {
-        var rows: [HierarchicalFlightRow] = []
-        
-        for date in flightDates {
-            let newRow = HierarchicalFlightRow(
-                label: longDateFormatter.string(from: date),
-                children: flightsForDay(date: date).map {
-                    hierarchicalFlightRowFromFlight($0)
-                }
-            )
-            rows.append(newRow)
-        }
-        return rows
     }
     
     var flightDates: [Date] {
@@ -102,13 +78,23 @@ struct SearchFlights: View {
                 .background(Color.white)
                 .pickerStyle(SegmentedPickerStyle())
                 
-                List(hierarchicalFlights, children: \.children) { row in
-                    if let flight = row.flight {
-                        SearchResultRow(flight: flight)
-                    } else {
-                        Text(row.label)
+                List {
+                    ForEach(flightDates, id: \.hashValue) { date in
+                        Section(
+                            header: Text(longDateFormatter.string(from: date)),
+                            footer:
+                                Text(
+                                    "Matching flights " + "\(flightsForDay(date: date).count)"
+                                )
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        ) {
+                            ForEach(flightsForDay(date: date)) { flight in
+                                SearchResultRow(flight: flight)
+                            }
+                        }
                     }
                 }
+                .listStyle(InsetGroupedListStyle())
                 
                 Spacer()
             }
@@ -116,14 +102,6 @@ struct SearchFlights: View {
             .navigationBarTitle("Search Flights")
             .padding()
         }
-    }
-    
-    func hierarchicalFlightRowFromFlight(_ flight: FlightInformation) -> HierarchicalFlightRow {
-        return HierarchicalFlightRow(
-            label: longDateFormatter.string(from: flight.localTime),
-            flight: flight,
-            children: nil
-        )
     }
     
     func flightsForDay(date: Date) -> [FlightInformation] {
