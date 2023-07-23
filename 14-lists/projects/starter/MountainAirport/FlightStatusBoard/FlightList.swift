@@ -30,6 +30,13 @@ import SwiftUI
 
 struct FlightList: View {
     
+    private var nextFlightId: Int {
+        guard let flight = flights.first(where: { $0.localTime >= Date() }) else {
+            return flights.last?.id ?? 0
+        }
+        return flight.id
+    }
+    
     @State private var path: [FlightInformation] = []
 
     var flights: [FlightInformation]
@@ -37,21 +44,26 @@ struct FlightList: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            ScrollView([/*.horizontal,*/ .vertical]) {
-                LazyVStack {
-                    // flight가 Identifiable를 채택하면 아래처럼 ForEach에 Id를 명시하지 않고 사용할 수 있음
-                    // ForEach(flights, id: \.id) { flight in
-                    ForEach(flights) { flight in
-                        NavigationLink(value: flight) {
-                            FlightRow(flight: flight)
+            ScrollViewReader { scrollProxy in
+                ScrollView([/*.horizontal,*/ .vertical]) {
+                    LazyVStack {
+                        // flight가 Identifiable를 채택하면 아래처럼 ForEach에 Id를 명시하지 않고 사용할 수 있음
+                        // ForEach(flights, id: \.id) { flight in
+                        ForEach(flights) { flight in
+                            NavigationLink(value: flight) {
+                                FlightRow(flight: flight)
+                            }
                         }
+                        .navigationDestination(
+                            for: FlightInformation.self,
+                            destination: { flight in
+                                FlightDetails(flight: flight)
+                            }
+                        )
                     }
-                    .navigationDestination(
-                        for: FlightInformation.self,
-                        destination: { flight in
-                            FlightDetails(flight: flight)
-                        }
-                    )
+                }
+                .onAppear {
+                    scrollProxy.scrollTo(nextFlightId, anchor: .center)
                 }
             }
         }
