@@ -45,7 +45,22 @@ struct FlightList: View {
     var body: some View {
         NavigationStack(path: $path) {
             ScrollViewReader { scrollProxy in
-                ScrollView([/*.horizontal,*/ .vertical]) {
+                List(flights) { flight in
+                    NavigationLink(value: flight) {
+                        FlightRow(flight: flight)
+                    }
+                }
+                .navigationDestination(
+                    for: FlightInformation.self,
+                    destination: { flight in
+                        FlightDetails(flight: flight)
+                    }
+                )
+                .onAppear {
+                    scrollProxy.scrollTo(nextFlightId, anchor: .center)
+                }
+                
+                /*ScrollView([/*.horizontal,*/ .vertical]) {
                     LazyVStack {
                         // flight가 Identifiable를 채택하면 아래처럼 ForEach에 Id를 명시하지 않고 사용할 수 있음
                         // ForEach(flights, id: \.id) { flight in
@@ -64,7 +79,7 @@ struct FlightList: View {
                 }
                 .onAppear {
                     scrollProxy.scrollTo(nextFlightId, anchor: .center)
-                }
+                }*/
             }
         }
         .onAppear {
