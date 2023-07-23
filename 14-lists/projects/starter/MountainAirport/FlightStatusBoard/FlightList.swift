@@ -39,7 +39,9 @@ struct FlightList: View {
         NavigationStack(path: $path) {
             ScrollView([/*.horizontal,*/ .vertical]) {
                 VStack {
-                    ForEach(flights, id: \.id) { flight in
+                    // flight가 Identifiable를 채택하면 아래처럼 ForEach에 Id를 명시하지 않고 사용할 수 있음
+                    // ForEach(flights, id: \.id) { flight in
+                    ForEach(flights) { flight in
                         NavigationLink(value: flight) {
                             FlightRow(flight: flight)
                         }
