@@ -38,7 +38,7 @@ struct FlightList: View {
     var body: some View {
         NavigationStack(path: $path) {
             ScrollView([/*.horizontal,*/ .vertical]) {
-                VStack {
+                LazyVStack {
                     // flight가 Identifiable를 채택하면 아래처럼 ForEach에 Id를 명시하지 않고 사용할 수 있음
                     // ForEach(flights, id: \.id) { flight in
                     ForEach(flights) { flight in
