@@ -33,6 +33,12 @@ struct SearchFlights: View {
     var matchingFlights: [FlightInformation] {
         var matchingFlights = flightData
         
+        if !city.isEmpty {
+            matchingFlights = matchingFlights.filter {
+                $0.otherAirport.lowercased().contains(city.lowercased())
+            }
+        }
+        
         if directionFilter != .none {
             matchingFlights = matchingFlights.filter {
                 $0.direction == directionFilter
@@ -44,6 +50,7 @@ struct SearchFlights: View {
     
     @State private var date = Date()
     @State private var directionFilter: FlightDirection = .none
+    @State private var city = ""
     
     var flightData: [FlightInformation]
     
@@ -64,9 +71,14 @@ struct SearchFlights: View {
                 }
                 .background(Color.white)
                 .pickerStyle(SegmentedPickerStyle())
-                // Insert Results
+                
+                List(matchingFlights) { flight in
+                  SearchResultRow(flight: flight)
+                }
+                
                 Spacer()
             }
+            .searchable(text: $city)
             .navigationBarTitle("Search Flights")
             .padding()
         }
