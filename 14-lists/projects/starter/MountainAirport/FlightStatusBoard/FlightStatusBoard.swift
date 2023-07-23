@@ -31,9 +31,7 @@ import SwiftUI
 struct FlightStatusBoard: View {
     
     var shownFlights: [FlightInformation] {
-        hidePast ?
-        flights.filter { $0.localTime >= Date() } :
-        flights
+        hidePast ? flights.filter { $0.localTime >= Date() } : flights
     }
     
     @State private var hidePast = false

@@ -48,10 +48,12 @@ struct FlightRow: View {
             VStack(alignment: .leading) {
                 Text(flight.flightName)
                     .font(.title2)
+                
                 HStack {
                     Text(flight.flightStatus)
                     Text(flight.localTime, formatter: timeFormatter)
                 }.foregroundColor(flight.statusColor)
+                
                 HStack {
                     Text(flight.otherAirport)
                     Text("·")
