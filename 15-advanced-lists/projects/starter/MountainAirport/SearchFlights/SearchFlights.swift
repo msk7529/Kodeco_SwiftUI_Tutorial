@@ -98,7 +98,11 @@ struct SearchFlights: View {
                 
                 Spacer()
             }
-            .searchable(text: $city)
+            .searchable(text: $city) {
+                ForEach(FlightData.citiesContaining(city), id: \.self) { city in
+                    Text(city).searchCompletion(city)
+                  }
+            }
             .navigationBarTitle("Search Flights")
             .padding()
         }
