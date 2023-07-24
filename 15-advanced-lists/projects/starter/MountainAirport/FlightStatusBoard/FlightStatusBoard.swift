@@ -45,56 +45,59 @@ struct FlightStatusBoard: View {
     var flightToShow: FlightInformation?
     
     var body: some View {
-        VStack {
-            Text(lastUpdateString(Date()))
-              .font(.footnote)
-            
-            TabView(selection: $selectedTab) {
-                FlightList(
-                    flights: shownFlights.filter { $0.direction == .arrival },
-                    highlightedIds: $highlightedIds
-                )
-                .tabItem {
-                    Image("descending-airplane")
-                        .resizable()
-                    Text("Arrivals")
-                }
-                .tag(0)
+        TimelineView(.everyMinute) { context in     // 분이 변경되는 즉시 뷰 refresh
+        // TimelineView(.periodic(from: .now, by: 60.0)) { context in   // 매 60초 마다 뷰 refresh
+            VStack {
+                Text(lastUpdateString(context.date))
+                    .font(.footnote)
                 
-                FlightList(
-                    flights: shownFlights,
-                    flightToShow: flightToShow,
-                    highlightedIds: $highlightedIds
+                TabView(selection: $selectedTab) {
+                    FlightList(
+                        flights: shownFlights.filter { $0.direction == .arrival },
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image("descending-airplane")
+                            .resizable()
+                        Text("Arrivals")
+                    }
+                    .tag(0)
+                    
+                    FlightList(
+                        flights: shownFlights,
+                        flightToShow: flightToShow,
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image(systemName: "airplane")
+                            .resizable()
+                        Text("All")
+                    }
+                    .tag(1)
+                    
+                    FlightList(
+                        flights: shownFlights.filter { $0.direction == .departure },
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image("ascending-airplane")
+                        Text("Departures")
+                    }
+                    .tag(2)
+                }
+                .onAppear {
+                    if flightToShow != nil {
+                        selectedTab = 1
+                    }
+                }
+                .refreshable {
+                    await flights = FlightData.refreshFlights()
+                }
+                .navigationTitle("Today's Flight Status")
+                .navigationBarItems(
+                    trailing: Toggle("Hide Past", isOn: $hidePast)
                 )
-                .tabItem {
-                    Image(systemName: "airplane")
-                        .resizable()
-                    Text("All")
-                }
-                .tag(1)
-                
-                FlightList(
-                    flights: shownFlights.filter { $0.direction == .departure },
-                    highlightedIds: $highlightedIds
-                )
-                .tabItem {
-                    Image("ascending-airplane")
-                    Text("Departures")
-                }
-                .tag(2)
             }
-            .onAppear {
-                if flightToShow != nil {
-                    selectedTab = 1
-                }
-            }
-            .refreshable {
-                await flights = FlightData.refreshFlights()
-            }
-            .navigationTitle("Today's Flight Status")
-            .navigationBarItems(
-                trailing: Toggle("Hide Past", isOn: $hidePast)
-            )
         }
     }
     
