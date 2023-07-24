@@ -1,4 +1,4 @@
-/// Copyright (c) 2023 Kodeco Inc
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,10 +18,6 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,37 +29,40 @@
 import SwiftUI
 
 struct SearchResultRow: View {
-  var flight: FlightInformation
-
-  var timeFormatter: DateFormatter {
-    let tdf = DateFormatter()
-    tdf.timeStyle = .short
-    tdf.dateStyle = .medium
-    return tdf
-  }
-
-  var body: some View {
-    HStack {
-      FlightStatusIcon(flight: flight)
-        .padding(5)
-        .clipShape(RoundedRectangle(cornerRadius: 7.0))
-      VStack(alignment: .leading) {
-        Text(flight.flightName)
-          .font(.title3) +
-          Text(" \(flight.dirString) \(flight.otherAirport)")
-        HStack {
-          Text(flight.localTime, formatter: timeFormatter)
-            .foregroundColor(.gray)
-        }
-      }
+    
+    var timeFormatter: DateFormatter {
+        let tdf = DateFormatter()
+        tdf.timeStyle = .short
+        tdf.dateStyle = .medium
+        return tdf
     }
-  }
+    
+    var flight: FlightInformation
+    
+    var body: some View {
+        HStack {
+            FlightStatusIcon(flight: flight)
+                .padding(5)
+                .clipShape(RoundedRectangle(cornerRadius: 7.0))
+            
+            VStack(alignment: .leading) {
+                Text(flight.flightName)
+                    .font(.title3) +
+                Text(" \(flight.dirString) \(flight.otherAirport)")
+                
+                HStack {
+                    Text(flight.localTime, formatter: timeFormatter)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+    }
 }
 
 struct SearchResultRow_Previews: PreviewProvider {
-  static var previews: some View {
-    SearchResultRow(
-      flight: FlightData.generateTestFlight(date: Date())
-    )
-  }
+    static var previews: some View {
+        SearchResultRow(
+            flight: FlightData.generateTestFlight(date: Date())
+        )
+    }
 }

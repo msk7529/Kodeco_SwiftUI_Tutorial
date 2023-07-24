@@ -1,4 +1,4 @@
-/// Copyright (c) 2023 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -29,38 +29,35 @@
 import SwiftUI
 
 struct HighlightActionView: View {
-  var flightId: Int
-  @Binding var highlightedIds: [Int]
-
-  func toggleHighlight() {
-    // 1
-    let flightIdx = highlightedIds.firstIndex { $0 == flightId
+    
+    var flightId: Int
+    
+    @Binding var highlightedIds: [Int]
+    
+    var body: some View {
+        Button {
+            toggleHighlight()
+        } label: {
+            Image(systemName: "highlighter")
+        }
+        .tint(Color.yellow)     // 따로 설정하지 않으면 gray 색상이 적용됨
     }
-    // 2
-    if let index = flightIdx {
-      // 3
-      highlightedIds.remove(at: index)
-    } else {
-      // 4
-      highlightedIds.append(flightId)
+    
+    func toggleHighlight() {
+        let flightIdx = highlightedIds.firstIndex { $0 == flightId }
+        if let index = flightIdx {
+            highlightedIds.remove(at: index)
+        } else {
+            highlightedIds.append(flightId)
+        }
     }
-  }
-
-  var body: some View {
-    Button {
-      toggleHighlight()
-    } label: {
-      Image(systemName: "highlighter")
-    }
-    .tint(Color.yellow)
-  }
 }
 
 struct HighlightActionView_Previews: PreviewProvider {
-  static var previews: some View {
-    HighlightActionView(
-      flightId: 1,
-      highlightedIds: .constant([1])
-    )
-  }
+    static var previews: some View {
+        HighlightActionView(
+            flightId: 1,
+            highlightedIds: .constant([1])
+        )
+    }
 }

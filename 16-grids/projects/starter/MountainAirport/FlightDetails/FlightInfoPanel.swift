@@ -18,10 +18,6 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,51 +29,56 @@
 import SwiftUI
 
 struct FlightInfoPanel: View {
-  var flight: FlightInformation
-
-  var timeFormatter: DateFormatter {
-    let tdf = DateFormatter()
-    tdf.timeStyle = .short
-    tdf.dateStyle = .none
-    return tdf
-  }
-
-  var body: some View {
-    HStack(alignment: .top) {
-      Image(systemName: "info.circle")
-        .resizable()
-        .frame(width: 35, height: 35, alignment: .leading)
-      VStack(alignment: .leading) {
-        Text("Flight Details")
-          .font(.title2)
-        if flight.direction == .arrival {
-          Text("Arriving at Gate \(flight.gate)")
-          Text("Flying from \(flight.otherAirport)")
-        } else {
-          Text("Departing from Gate \(flight.gate)")
-          Text("Flying to \(flight.otherAirport)")
-        }
-        Text(flight.flightStatus) + Text(" (\(timeFormatter.string(from: flight.localTime)))")
-        if flight.gate.hasPrefix("A") {
-          Image("terminal-a-map")
-            .resizable()
-            .frame(maxWidth: .infinity)
-            .aspectRatio(contentMode: .fit)
-        } else {
-          Image("terminal-b-map")
-            .resizable()
-            .frame(maxWidth: .infinity)
-            .aspectRatio(contentMode: .fit)
-        }
-      }
+    
+    var timeFormatter: DateFormatter {
+        let tdf = DateFormatter()
+        tdf.timeStyle = .short
+        tdf.dateStyle = .none
+        return tdf
     }
-  }
+    
+    var flight: FlightInformation
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Image(systemName: "info.circle")
+                .resizable()
+                .frame(width: 35, height: 35, alignment: .leading)
+            
+            VStack(alignment: .leading) {
+                Text("Flight Details")
+                    .font(.title2)
+                
+                if flight.direction == .arrival {
+                    Text("Arriving at Gate \(flight.gate)")
+                    Text("Flying from \(flight.otherAirport)")
+                } else {
+                    Text("Departing from Gate \(flight.gate)")
+                    Text("Flying to \(flight.otherAirport)")
+                }
+                
+                Text(flight.flightStatus) + Text(" (\(timeFormatter.string(from: flight.localTime)))")
+                
+                if flight.gate.hasPrefix("A") {
+                    Image("terminal-a-map")
+                        .resizable()
+                        .frame(maxWidth: .infinity)
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Image("terminal-b-map")
+                        .resizable()
+                        .frame(maxWidth: .infinity)
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
+        }
+    }
 }
 
 struct FlightInfoPanel_Previews: PreviewProvider {
-  static var previews: some View {
-    FlightInfoPanel(
-      flight: FlightData.generateTestFlight(date: Date())
-    )
-  }
+    static var previews: some View {
+        FlightInfoPanel(
+            flight: FlightData.generateTestFlight(date: Date())
+        )
+    }
 }
