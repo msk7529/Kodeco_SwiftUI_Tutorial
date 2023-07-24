@@ -33,18 +33,11 @@ struct SearchFlights: View {
     var matchingFlights: [FlightInformation] {
         var matchingFlights = flightData
         
-        if !city.isEmpty {
-            matchingFlights = matchingFlights.filter {
-                $0.otherAirport.lowercased().contains(city.lowercased())
-            }
-        }
-        
         if directionFilter != .none {
             matchingFlights = matchingFlights.filter {
                 $0.direction == directionFilter
             }
         }
-        
         return matchingFlights
     }
     
@@ -57,8 +50,8 @@ struct SearchFlights: View {
     @State private var date = Date()
     @State private var directionFilter: FlightDirection = .none
     @State private var city = ""
-    
-    var flightData: [FlightInformation]
+    @State var flightData: [FlightInformation]
+    @State private var runningSearch = false
     
     var body: some View {
         ZStack {
@@ -94,6 +87,21 @@ struct SearchFlights: View {
                         }
                     }
                 }
+                .overlay(
+                    Group {
+                        if runningSearch {
+                            VStack {
+                                Text("Searching...")
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .tint(.black)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.gray)
+                            .opacity(0.8)
+                        }
+                    }
+                )
                 .listStyle(InsetGroupedListStyle())
                 
                 Spacer()
@@ -102,6 +110,13 @@ struct SearchFlights: View {
                 ForEach(FlightData.citiesContaining(city), id: \.self) { city in
                     Text(city).searchCompletion(city)
                   }
+            }
+            .onSubmit(of: .search) {
+                Task {
+                    runningSearch = true
+                    await flightData = FlightData.searchFlightsForCity(city)
+                    runningSearch = false
+                }
             }
             .navigationBarTitle("Search Flights")
             .padding()
