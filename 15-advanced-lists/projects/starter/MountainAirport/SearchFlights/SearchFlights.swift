@@ -106,7 +106,7 @@ struct SearchFlights: View {
                 
                 Spacer()
             }
-            .searchable(text: $city) {
+            .searchable(text: $city, prompt: "City Name") {
                 ForEach(FlightData.citiesContaining(city), id: \.self) { city in
                     Text(city).searchCompletion(city)
                   }
@@ -116,6 +116,15 @@ struct SearchFlights: View {
                     runningSearch = true
                     await flightData = FlightData.searchFlightsForCity(city)
                     runningSearch = false
+                }
+            }
+            .onChange(of: city) { newText in
+                if newText.isEmpty {
+                    Task {
+                        runningSearch = true
+                        await flightData = FlightData.searchFlightsForCity(city)
+                        runningSearch = false
+                    }
                 }
             }
             .navigationBarTitle("Search Flights")
