@@ -33,5 +33,5 @@
 import SwiftUI
 
 class FlightNavigationInfo: ObservableObject {
-  @Published var lastFlightId: Int?
+    @Published var lastFlightId: Int?
 }
