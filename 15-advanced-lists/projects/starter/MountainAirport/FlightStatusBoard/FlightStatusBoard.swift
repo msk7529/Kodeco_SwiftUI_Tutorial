@@ -38,10 +38,10 @@ struct FlightStatusBoard: View {
     
     @State private var hidePast = false
     @State var highlightedIds: [Int] = []
+    @State var flights: [FlightInformation]
     
     @AppStorage("FlightStatusCurrentTab") var selectedTab = 1
     
-    var flights: [FlightInformation]
     var flightToShow: FlightInformation?
     
     var body: some View {
@@ -87,6 +87,9 @@ struct FlightStatusBoard: View {
                 if flightToShow != nil {
                     selectedTab = 1
                 }
+            }
+            .refreshable {
+                await flights = FlightData.refreshFlights()
             }
             .navigationTitle("Today's Flight Status")
             .navigationBarItems(
