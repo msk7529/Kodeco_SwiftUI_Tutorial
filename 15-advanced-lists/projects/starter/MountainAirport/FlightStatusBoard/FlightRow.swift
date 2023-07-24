@@ -37,6 +37,12 @@ struct FlightRow: View {
         return tdf
     }
     
+    var relativeTimeFormatter: RelativeDateTimeFormatter {
+        let rdf = RelativeDateTimeFormatter()
+        rdf.unitsStyle = .abbreviated
+        return rdf
+    }
+    
     var flight: FlightInformation
     
     var body: some View {
@@ -52,6 +58,9 @@ struct FlightRow: View {
                 HStack {
                     Text(flight.flightStatus)
                     Text(flight.localTime, formatter: timeFormatter)
+                    Text("(") +
+                    Text(flight.localTime, formatter: relativeTimeFormatter) +
+                    Text(")")
                 }.foregroundColor(flight.statusColor)
                 
                 HStack {
