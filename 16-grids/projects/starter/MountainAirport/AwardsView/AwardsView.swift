@@ -43,7 +43,30 @@ struct AwardsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                LazyVGrid(  // 세로로 확장되는 그리드뷰
+                    columns:
+                        [
+                            GridItem(.fixed(160)),  // 열 너비
+                            GridItem(.fixed(160))
+                        ],
+                    spacing: 15     // 행 사이 간격
+                ) {
+                    ForEach(awardArray) { award in
+                        NavigationLink(value: award) {
+                            AwardCardView(award: award)
+                                .foregroundColor(.black)
+                                .frame(width: 150, height: 220)
+                        }
+                    }
+                }
+                .navigationDestination(for: AwardInformation.self) { award in
+                    AwardDetails(award: award)
+                }
+                .font(.title)
+                .foregroundColor(.white)
+                .padding()
+                
+                /*VStack {
                     HStack {
                         NavigationLink(value: awardArray[0]) {
                             AwardCardView(award: awardArray[0])
@@ -74,7 +97,7 @@ struct AwardsView: View {
                 }
                 .font(.title)
                 .foregroundColor(.white)
-                .padding()
+                .padding()*/
             }
             .navigationTitle("Your Awards")
             .padding()
