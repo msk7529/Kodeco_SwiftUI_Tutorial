@@ -29,34 +29,35 @@
 import SwiftUI
 
 struct TerminalAView: View {
-  var body: some View {
-    ZStack {
-      Image("background-view")
-        .resizable()
-        .rotationEffect(.degrees(180.0))
-        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-      VStack(alignment: .leading) {
-        Text("Terminal A")
-          .font(.title)
-          .padding()
-        Text("Terminal A offers the follow dining options:")
-          .font(.title2)
-        Text("\u{2022} Juniper Fiddler")
-        Text("\u{2022} Orange Emperor")
-        Text("\u{2022}  Aqua Sunset")
-        Spacer()
-      }
-      .foregroundColor(.white)
-      .padding()
-      .font(.title3)
+    
+    var body: some View {
+        ZStack {
+            Image("background-view")
+                .resizable()
+                .rotationEffect(.degrees(180.0))
+                .clipShape(RoundedRectangle(cornerRadius: 20.0))
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack(alignment: .leading) {
+                Text("Terminal A")
+                    .font(.title)
+                    .padding()
+                Text("Terminal A offers the follow dining options:")
+                    .font(.title2)
+                Text("\u{2022} Juniper Fiddler")
+                Text("\u{2022} Orange Emperor")
+                Text("\u{2022}  Aqua Sunset")
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .padding()
+            .font(.title3)
+        }
     }
-  }
 }
 
 struct TerminalAView_Previews: PreviewProvider {
-  static var previews: some View {
-    TerminalAView()
-  }
+    static var previews: some View {
+        TerminalAView()
+    }
 }

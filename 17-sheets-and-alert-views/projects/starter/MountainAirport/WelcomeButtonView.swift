@@ -1,4 +1,4 @@
-/// Copyright (c) 2023 Kodeco inc
+/// Copyright (c) 2023 Kodeco Inc
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -33,49 +33,52 @@
 import SwiftUI
 
 struct WelcomeButtonView: View {
-  var title: String
-  var subTitle: String
-  var imageName: String
-  var imageAngle: Double = 0.0
-
-  var body: some View {
-    HStack {
-      Image(systemName: imageName)
-        .resizable()
-        .frame(width: 30, height: 30)
-        .padding(10)
-        .background(
-          Circle()
+    
+    var title: String
+    var subTitle: String
+    var imageName: String
+    var imageAngle: Double = 0.0
+    
+    var body: some View {
+        HStack {
+            Image(systemName: imageName)
+                .resizable()
+                .frame(width: 30, height: 30)
+                .padding(10)
+                .background(
+                    Circle()
+                        .foregroundColor(.white)
+                )
+                .padding(15.0)
+                .rotationEffect(.degrees(imageAngle))
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.title2)
+                
+                Text(subTitle)
+                    .font(.subheadline)
+            }
             .foregroundColor(.white)
+            .padding([.top, .bottom], 15.0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            Image("link-pattern")
+                .resizable()
+                .clipped()
         )
-        .padding(15.0)
-        .rotationEffect(.degrees(imageAngle))
-      VStack(alignment: .leading) {
-        Text(title)
-          .font(.title2)
-        Text(subTitle)
-          .font(.subheadline)
-      }
-      .foregroundColor(.white)
-      .padding([.top, .bottom], 15.0)
+        .shadow(radius: 10)
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .background(
-      Image("link-pattern")
-        .resizable()
-        .clipped()
-    )
-    .shadow(radius: 10)
-  }
 }
 
 struct WelcomeButtonView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeButtonView(
-      title: "Flight Status",
-      subTitle: "Departure and Arrival Information",
-      imageName: "airplane",
-      imageAngle: -45.0
-    )
-  }
+    static var previews: some View {
+        WelcomeButtonView(
+            title: "Flight Status",
+            subTitle: "Departure and Arrival Information",
+            imageName: "airplane",
+            imageAngle: -45.0
+        )
+    }
 }

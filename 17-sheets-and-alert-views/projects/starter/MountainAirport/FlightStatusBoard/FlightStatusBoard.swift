@@ -1,4 +1,4 @@
-/// Copyright (c) 2023 Kodeco inc
+/// Copyright (c) 2023 Kodeco Inc
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,10 +18,6 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,88 +29,92 @@
 import SwiftUI
 
 struct FlightStatusBoard: View {
-  @State var flights: [FlightInformation]
-  var flightToShow: FlightInformation?
-  @State private var hidePast = false
-  @AppStorage("FlightStatusCurrentTab") var selectedTab = 1
-  @State var highlightedIds: [Int] = []
-
-  var shownFlights: [FlightInformation] {
-    hidePast ?
-      flights.filter { $0.localTime >= Date() } :
-      flights
-  }
-
-  func lastUpdateString(_ date: Date) -> String {
-    let dateF = DateFormatter()
-    dateF.timeStyle = .short
-    dateF.dateFormat = .none
-    return "Last updated: \(dateF.string(from: Date()))"
-  }
-
-  var body: some View {
-    TimelineView(.animation) { context in
-      VStack {
-        Text(lastUpdateString(context.date))
-          .font(.footnote)
-        TabView(selection: $selectedTab) {
-          FlightList(
-            flights: shownFlights.filter { $0.direction == .arrival },
-            highlightedIds: $highlightedIds
-          ).tabItem {
-            Image("descending-airplane")
-              .resizable()
-            Text("Arrivals")
-          }
-          .badge(shownFlights.filter { $0.direction == .arrival }.count)
-          .tag(0)
-          FlightList(
-            flights: shownFlights,
-            flightToShow: flightToShow,
-            highlightedIds: $highlightedIds
-          ).tabItem {
-            Image(systemName: "airplane")
-              .resizable()
-            Text("All")
-          }
-          .tag(1)
-          FlightList(
-            flights: shownFlights.filter { $0.direction == .departure },
-            highlightedIds: $highlightedIds
-          ).tabItem {
-            Image("ascending-airplane")
-            Text("Departures")
-          }
-          .badge(shownFlights.filter { $0.direction == .departure }.count)
-          .tag(2)
-        }
-        .onAppear {
-          if flightToShow != nil {
-            selectedTab = 1
-          }
-        }
-        .refreshable {
-          await flights = FlightData.refreshFlights()
-        }
-        .navigationTitle("Flight Status")
-        .navigationBarItems(
-          trailing: Toggle(
-            "Hide Past",
-            isOn: $hidePast
-          )
-        )
-      }
+    
+    var shownFlights: [FlightInformation] {
+        hidePast ?
+        flights.filter { $0.localTime >= Date() } :
+        flights
     }
-  }
+    
+    @State private var hidePast = false
+    @State var highlightedIds: [Int] = []
+    @State var flights: [FlightInformation]
+    
+    @AppStorage("FlightStatusCurrentTab") var selectedTab = 1
+    
+    var flightToShow: FlightInformation?
+    
+    var body: some View {
+        TimelineView(.everyMinute) { context in     // 분이 변경되는 즉시 뷰 refresh
+        // TimelineView(.periodic(from: .now, by: 60.0)) { context in   // 매 60초 마다 뷰 refresh
+            VStack {
+                Text(lastUpdateString(context.date))
+                    .font(.footnote)
+                
+                TabView(selection: $selectedTab) {
+                    FlightList(
+                        flights: shownFlights.filter { $0.direction == .arrival },
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image("descending-airplane")
+                            .resizable()
+                        Text("Arrivals")
+                    }
+                    .tag(0)
+                    
+                    FlightList(
+                        flights: shownFlights,
+                        flightToShow: flightToShow,
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image(systemName: "airplane")
+                            .resizable()
+                        Text("All")
+                    }
+                    .tag(1)
+                    
+                    FlightList(
+                        flights: shownFlights.filter { $0.direction == .departure },
+                        highlightedIds: $highlightedIds
+                    )
+                    .tabItem {
+                        Image("ascending-airplane")
+                        Text("Departures")
+                    }
+                    .tag(2)
+                }
+                .onAppear {
+                    if flightToShow != nil {
+                        selectedTab = 1
+                    }
+                }
+                .refreshable {
+                    await flights = FlightData.refreshFlights()
+                }
+                .navigationTitle("Today's Flight Status")
+                .navigationBarItems(
+                    trailing: Toggle("Hide Past", isOn: $hidePast)
+                )
+            }
+        }
+    }
+    
+    func lastUpdateString(_ date: Date) -> String {
+        let dateF = DateFormatter()
+        dateF.timeStyle = .short
+        dateF.dateFormat = .none
+        return "Last updated: \(dateF.string(from: Date()))"
+    }
 }
 
 struct FlightStatusBoard_Previews: PreviewProvider {
-  static var previews: some View {
-    NavigationStack {
-      FlightStatusBoard(
-        flights: FlightData.generateTestFlights(date: Date())
-      )
+    static var previews: some View {
+        NavigationStack {
+            FlightStatusBoard(
+                flights: FlightData.generateTestFlights(date: Date())
+            )
+        }
     }
-    .environmentObject(AppEnvironment())
-  }
 }

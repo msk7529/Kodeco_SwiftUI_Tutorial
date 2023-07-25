@@ -29,34 +29,35 @@
 import SwiftUI
 
 struct TerminalBView: View {
-  var body: some View {
-    ZStack {
-      Image("background-view")
-        .resizable()
-        .rotationEffect(.degrees(180.0))
-        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-      VStack(alignment: .leading) {
-        Text("Terminal B")
-          .font(.title)
-          .padding()
-        Text("Terminal B offers the follow dining options:")
-          .font(.title2)
-        Text("\u{2022} The Olive Morning")
-        Text("\u{2022} The Ruby Afternoon")
-        Text("\u{2022} Sunset Elements")
-        Spacer()
-      }
-      .foregroundColor(.white)
-      .padding()
-      .font(.title3)
+    
+    var body: some View {
+        ZStack {
+            Image("background-view")
+                .resizable()
+                .rotationEffect(.degrees(180.0))
+                .clipShape(RoundedRectangle(cornerRadius: 20.0))
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack(alignment: .leading) {
+                Text("Terminal B")
+                    .font(.title)
+                    .padding()
+                Text("Terminal B offers the follow dining options:")
+                    .font(.title2)
+                Text("\u{2022} The Olive Morning")
+                Text("\u{2022} The Ruby Afternoon")
+                Text("\u{2022} Sunset Elements")
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .padding()
+            .font(.title3)
+        }
     }
-  }
 }
 
 struct TerminalBView_Previews: PreviewProvider {
-  static var previews: some View {
-    TerminalBView()
-  }
+    static var previews: some View {
+        TerminalBView()
+    }
 }
