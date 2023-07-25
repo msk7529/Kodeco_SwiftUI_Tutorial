@@ -43,18 +43,38 @@ struct AwardsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack {
-                    ForEach(awardArray, id: \.self) { award in
-                        NavigationLink(value: award) {
-                            AwardCardView(award: award)
+                VStack {
+                    HStack {
+                        NavigationLink(value: awardArray[0]) {
+                            AwardCardView(award: awardArray[0])
+                                .foregroundColor(.black)
+                                .frame(width: 150, height: 220)
+                        }
+                        
+                        Spacer()
+                        
+                        NavigationLink(value: awardArray[1]) {
+                            AwardCardView(award: awardArray[1])
                                 .foregroundColor(.black)
                                 .frame(width: 150, height: 220)
                         }
                     }
-                    .navigationDestination(for: AwardInformation.self) { award in
-                        AwardDetails(award: award)
+                    HStack {
+                        AwardCardView(award: awardArray[2])
+                            .foregroundColor(.black)
+                            .frame(width: 150, height: 220)
+                        
+                        Spacer()
+                        
+                        AwardCardView(award: awardArray[3])
+                            .foregroundColor(.black)
+                            .frame(width: 150, height: 220)
                     }
+                    Spacer()
                 }
+                .font(.title)
+                .foregroundColor(.white)
+                .padding()
             }
             .navigationTitle("Your Awards")
             .padding()
