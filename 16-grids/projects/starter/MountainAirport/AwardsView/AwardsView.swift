@@ -40,8 +40,11 @@ struct AwardsView: View {
     
     var awardColumns: [GridItem] {
         [
+            GridItem(.adaptive(minimum: 150, maximum: 170))
+            /*
             GridItem(.flexible(minimum: 100, maximum: 160)),
             GridItem(.flexible(minimum: 100, maximum: 160))
+             */
         ]
     }
     
