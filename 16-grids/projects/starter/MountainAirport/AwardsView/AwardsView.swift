@@ -32,10 +32,45 @@
 
 import SwiftUI
 
+struct AwardGrid: View {
+
+    var title: String
+    var awards: [AwardInformation]
+    
+    var body: some View {
+        Section(
+            header: Text(title)
+                .frame(maxWidth: .infinity)
+                .font(.title)
+                .foregroundColor(.white)
+                .background(
+                    .ultraThinMaterial,
+                    in: RoundedRectangle(cornerRadius: 10)
+                )
+        ) {
+            ForEach(awards) { award in
+                NavigationLink(value: award) {
+                    AwardCardView(award: award)
+                        .foregroundColor(.black)
+                        .aspectRatio(0.67, contentMode: .fit)
+                }
+            }
+        }
+    }
+}
+
 struct AwardsView: View {
     
     var awardArray: [AwardInformation] {
         flightNavigation.awardList
+    }
+    
+    var activeAwards: [AwardInformation] {
+        awardArray.filter { $0.awarded }
+    }
+    
+    var inactiveAwards: [AwardInformation] {
+        awardArray.filter { !$0.awarded }
     }
     
     var awardColumns: [GridItem] {
@@ -53,7 +88,17 @@ struct AwardsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: awardColumns, spacing: 15) {
+                LazyVGrid(columns: awardColumns) {
+                    AwardGrid(
+                        title: "Awarded",
+                        awards: activeAwards
+                    )
+                    AwardGrid(
+                        title: "Not Awarded",
+                        awards: inactiveAwards
+                    )
+                }
+                /* LazyVGrid(columns: awardColumns, spacing: 15) {
                     // 세로로 확장되는 그리드뷰
                     ForEach(awardArray) { award in
                         NavigationLink(value: award) {
@@ -68,7 +113,7 @@ struct AwardsView: View {
                 }
                 .font(.title)
                 .foregroundColor(.white)
-                .padding()
+                .padding()*/
                 
                 /*VStack {
                     HStack {
