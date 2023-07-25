@@ -40,8 +40,8 @@ struct AwardsView: View {
     
     var awardColumns: [GridItem] {
         [
-            GridItem(.flexible(minimum: 150)),
-            GridItem(.flexible(minimum: 150))
+            GridItem(.flexible(minimum: 100, maximum: 150)),
+            GridItem(.flexible(minimum: 100, maximum: 150))
         ]
     }
     
@@ -56,7 +56,7 @@ struct AwardsView: View {
                         NavigationLink(value: award) {
                             AwardCardView(award: award)
                                 .foregroundColor(.black)
-                                .frame(width: 150, height: 220)
+                                .frame(width: 160, height: 220)
                         }
                     }
                 }
