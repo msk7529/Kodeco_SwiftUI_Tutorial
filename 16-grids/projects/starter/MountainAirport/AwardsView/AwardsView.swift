@@ -38,19 +38,20 @@ struct AwardsView: View {
         flightNavigation.awardList
     }
     
+    var awardColumns: [GridItem] {
+        [
+            GridItem(.flexible(minimum: 150)),
+            GridItem(.flexible(minimum: 150))
+        ]
+    }
+    
     @EnvironmentObject var flightNavigation: AppEnvironment
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(  // 세로로 확장되는 그리드뷰
-                    columns:
-                        [
-                            GridItem(.fixed(160)),  // 열 너비
-                            GridItem(.fixed(160))
-                        ],
-                    spacing: 15     // 행 사이 간격
-                ) {
+                LazyVGrid(columns: awardColumns, spacing: 15) {
+                    // 세로로 확장되는 그리드뷰
                     ForEach(awardArray) { award in
                         NavigationLink(value: award) {
                             AwardCardView(award: award)
@@ -114,5 +115,6 @@ struct AwardsView_Previews: PreviewProvider {
     static var previews: some View {
         AwardsView()
             .environmentObject(AppEnvironment())
+            .previewDevice(.init(rawValue: "iPhone 14 Pro"))
     }
 }
